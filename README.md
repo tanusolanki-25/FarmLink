@@ -146,9 +146,9 @@ Create `backend/.env`:
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/farmlink"
 JWT_SECRET="any_long_random_string"
-REDIS_URL="redis://default:password@host:6379"
+REDIS_URL=""
 CLIENT_URL="http://localhost:5173"
-PORT=5000
+PORT=3001
 ```
 
 ```bash
@@ -167,22 +167,13 @@ npm install
 Create `frontend/.env`:
 
 ```
-VITE_API_URL="http://localhost:5000"
+VITE_API_URL="http://localhost:3001"
 ```
 
 ```bash
 npm run dev
 ```
 
-### Demo accounts (created by the seed script)
-
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@farmlink.com | Admin@123 |
-| Officer | officer@farmlink.com | Officer@123 |
-| Farmer | Register from the app | |
-
-> Change these passwords before any real deployment. Tip: to try two roles side by side, log in with one in a normal window and the other in an incognito window.
 
 ## Status and roadmap
 
@@ -202,7 +193,3 @@ npm run dev
 - Redis adapter for Socket.IO if the backend runs on multiple servers
 - Hindi and regional language support
 
-## Author
-
-**Tanu Solanki**, B.Tech Information Technology
-[LinkedIn](add-link) | [GitHub](add-link) | [Email](mailto:add-email)
