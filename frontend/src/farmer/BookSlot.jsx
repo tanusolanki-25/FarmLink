@@ -108,14 +108,16 @@ function BookSlot({ showBookSlot, setShowBookSlot }) {
     setSelectedCenter("");
     setBookingTime("09:00 AM");
 
+    setCrop("");
+    setQuantity("");
     fetchData();
   }, [showBookSlot]);
 
   return (
     <>
       {showBookSlot && (
-         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-          <div className="p-4 sm:p-6 w-full max-w-lg rounded-3xl bg-white shadow-2xl overflow-hidden animate-[fadeIn_.3s_ease]shadow-sm mx-auto space-y-4">
+         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm px-4 pt-20 pb-6 overflow-y-auto">
+          <div className="p-4 sm:p-6 w-full max-w-lg rounded-3xl bg-white shadow-2xl overflow-y-auto animate-[fadeIn_.3s_ease] shadow-sm mx-auto space-y-4">
             {/* Header */}
             <div className="flex">
               <div className="">
