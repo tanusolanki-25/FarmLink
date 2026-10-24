@@ -1,5 +1,5 @@
 import redis from "../config/redis.js";
-import prisma from "../lib/prisma.js";
+import prisma from "../services/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -27,7 +27,7 @@ const registerFarmer = asyncHandler(async (req, res) => {
   }
 
   // Create brand new Farmer
-   await prisma.farmer.create({
+  await prisma.farmer.create({
     data: {
       userId: req.user.id,
       name,
@@ -157,14 +157,14 @@ const getNearbyCenters = asyncHandler(async (req, res) => {
 
 const bookSlot = asyncHandler(async (req, res) => {
   const { centerId, date, time, crop, estimatedQuantity } = req.body;
-  const bookingDate = new Date(date + "T00:00:00.000Z"); 
+  const bookingDate = new Date(date + "T00:00:00.000Z");
 
   const qty = Number(estimatedQuantity);
   if (!crop || !String(crop).trim()) {
-    throw new ApiError(400, "Please select the crop you are bringing")
+    throw new ApiError(400, "Please select the crop you are bringing");
   }
   if (!Number.isFinite(qty) || qty <= 0) {
-     throw new ApiError(400, "Enter the approximate quantity in quintals")
+    throw new ApiError(400, "Enter the approximate quantity in quintals");
   }
 
   const farmer = await prisma.farmer.findUnique({
@@ -318,7 +318,7 @@ const deleteBooking = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, '', "Booking deleted successfully"));
+    .json(new ApiResponse(200, "", "Booking deleted successfully"));
 });
 
 const getQueueStatus = asyncHandler(async (req, res) => {
@@ -366,5 +366,5 @@ export {
   getBookingDetail,
   cancelBooking,
   getQueueStatus,
-  deleteBooking
+  deleteBooking,
 };

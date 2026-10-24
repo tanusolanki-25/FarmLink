@@ -10,7 +10,7 @@ const rawOrigins = (process.env.CORS_ORIGIN || "")
   .filter(Boolean);
 
 const defaultOrigins = [
-  "https://health-connect-zeta-seven.vercel.app",
+  "https://farm-link-sand.vercel.app/",
   "http://localhost:5173",
   "http://localhost:3001",
 ];

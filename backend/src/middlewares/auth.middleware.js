@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/apiError.js";
 import jwt from "jsonwebtoken";
-import prisma from "../lib/prisma.js";
+import prisma from "../services/prisma.js";
 
 export const verifyJWT = asyncHandler(async (req, _, next) => {
   try {

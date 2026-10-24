@@ -1,5 +1,5 @@
 import redis from "../config/redis.js";
-import prisma from "../lib/prisma.js";
+import prisma from "../services/prisma.js";
 import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
