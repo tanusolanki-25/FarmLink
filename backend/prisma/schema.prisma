@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  admin
+  farmer
+  officer
+}
+
+enum CenterStatus {
+  active
+  inactive
+}
+
+enum BookingStatus {
+  pending
+  verified
+  approved
+  rejected
+  completed
+  cancelled
+}
+
+enum PaymentStatus {
+  pending
+  completed
+  failed
+}
+
+model User {
+  id                  Int       @id @default(autoincrement())
+  email               String    @unique
+  passwordHash        String?
+  role                Role      @default(farmer)
+  phone               String?
+  createdAt           DateTime  @default(now())
+  refreshToken        String?   @unique
+  resetPasswordExpiry DateTime?
+  resetPasswordToken  String?
+  verified            Boolean   @default(false)
+  isEmailValid        Boolean   @default(false)
+
+  farmer  Farmer?
+  officer Officer?
+  otps    Otp[]
+}
+
+model Farmer {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @unique
+  user          User      @relation(fields: [userId], references: [id])
+  name          String
+  fatherName    String?
+  address       String
+  village       String
+  district      String
+  state         String
+  adhaarNumber String?
+  bookings      Booking[]
+}
+
+model Officer {
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  user     User    @relation(fields: [userId], references: [id])
+  centerId Int?
+  name     String?
+  center   Center? @relation(fields: [centerId], references: [id])
+}
+
+model Center {
+  id            Int    @id @default(autoincrement())
+  centerName    String
+  latitude      Float
+  longitude     Float
+  contactNumber String
+  code          String   @unique
+  state         String
+  district      String
+  address       String
+  pincode       String
+  managerName   String?
+
+  openingTime   String
+  closingTime   String
+
+  totalSlots    Int
+  availableSlots Int
+
+  status        CenterStatus @default(active)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+
+  bookings Booking[]
+  officers Officer[]
+}
+
+model Booking {
+  id        Int           @id @default(autoincrement())
+  farmerId  Int
+  farmer    Farmer        @relation(fields: [farmerId], references: [id])
+  centerId  Int
+  center    Center        @relation(fields: [centerId], references: [id])
+  date      DateTime
+  time      String
+  token     Int
+  status    BookingStatus @default(pending)
+  createdAt DateTime      @default(now())
+  crop              String?
+  estimatedQuantity Float? 
+  queue       Queue?
+  procurement Procurement?
+  payment     Payment?
+}
+
+model Queue {
+  id              Int     @id @default(autoincrement())
+  bookingId       Int     @unique
+  booking         Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  currentPosition Int
+  estimatedTime   String?
+}
+
+model Procurement {
+  id        Int     @id @default(autoincrement())
+  bookingId Int     @unique
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  crop      String
+  quantity  Float
+  quality   String?
+  status    String  @default("pending")
+}
+
+model Payment {
+  id        Int           @id @default(autoincrement())
+  bookingId Int           @unique
+  booking   Booking       @relation(fields: [bookingId], references: [id])
+  amount    Float
+  status    PaymentStatus @default(pending)
+}
+
+model Otp {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  otpHash   String
+  createdAt DateTime  @default(now())
+  userId    Int       @unique
+  expiresAt DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+}
