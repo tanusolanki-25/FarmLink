@@ -7,10 +7,15 @@
 <!-- Add 3-4 screenshots or one short GIF here: farmer queue page, officer dashboard, admin overview -->
 Admin overview
 <img width="1752" height="918" alt="image" src="https://github.com/user-attachments/assets/dbe87d52-7249-4341-ac1c-da95390488e5" />
+1.
 <img width="1705" height="646" alt="image" src="https://github.com/user-attachments/assets/dc310c27-3485-4c25-9013-4eb66b8b883c" />
+2.
 <img width="1689" height="828" alt="image" src="https://github.com/user-attachments/assets/2217815f-b4f1-49e8-abdb-72939e02f46f" />
+3.
 <img width="1714" height="768" alt="image" src="https://github.com/user-attachments/assets/199812b1-044a-4826-9e20-393c4e18f15c" />
+4.
 <img width="1723" height="767" alt="image" src="https://github.com/user-attachments/assets/f84ac971-bd1e-4549-85fc-7300451f013e" />
+5.
 <img width="1668" height="847" alt="image" src="https://github.com/user-attachments/assets/b4251396-bff2-46d9-8312-c46aefdd5df9" />
 
 
