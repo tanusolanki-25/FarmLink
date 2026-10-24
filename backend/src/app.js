@@ -42,7 +42,7 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 app.get("/", (req, res) => {
-  res.json({ message: "HealthConnect API is running" })
+  res.json({ message: "FarmLink API is running" })
 })
 
 // routes import
