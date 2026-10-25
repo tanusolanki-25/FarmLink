@@ -4,9 +4,11 @@ import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { hashPassword, verifyPassword } from "../utils/bcrypt.js";
 import { generateOTP, getOtpHtml } from "../services/generateOtp.js";
-import { sendEmail } from "../services/email.service.js";
+import { client, sendEmail } from "../services/email.service.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
+// import crypto from "crypto";
+import crypto from "node:crypto";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {

@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Mail,
   ArrowRight,
-  ArrowLeft,
   Loader2,
   CheckCircle2,
   KeyRound,
   ShieldCheck,
-  Sprout,
   Send,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -56,7 +54,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
+    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[520px]">
         {/* LEFT COLUMN: HERO IMAGE & BANNER */}
         <div className="relative hidden lg:flex lg:col-span-5 flex-col justify-between p-8 text-white overflow-hidden bg-emerald-950">

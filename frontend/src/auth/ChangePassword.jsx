@@ -99,7 +99,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
+    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
       <div className="w-full max-w-xl bg-white rounded-3xl shadow-xl shadow-green-950/5 border border-slate-100 overflow-hidden">
         {/* Header Banner */}
         <div className="bg-gradient-to-r from-green-600 to-emerald-700 px-6 sm:px-8 py-7 text-white text-center relative overflow-hidden">

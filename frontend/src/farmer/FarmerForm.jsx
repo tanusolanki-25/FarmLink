@@ -202,8 +202,8 @@ const FarmerForm = () => {
   // }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
-      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[640px]">
+    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30">
+      <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
         {/* LEFT COLUMN: HERO IMAGE & HIGHLIGHTS */}
         <div className="relative hidden lg:flex lg:col-span-5 flex-col justify-between p-8 text-white overflow-hidden bg-emerald-950">
           {/* Background Image with Dark Gradient Overlay */}
@@ -274,7 +274,7 @@ const FarmerForm = () => {
         </div>
 
         {/* RIGHT COLUMN: FARMER REGISTRATION FORM */}
-        <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center">
+        <div className="lg:col-span-7 p-4 sm:p-8 flex flex-col justify-center">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
               {isUpdateMode ? "Farmer Profile Details" : "Register Farmer Profile"}
@@ -301,7 +301,7 @@ const FarmerForm = () => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Ramesh Kumar Patel"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                    className={`w-full pl-10 pr-4 py-2 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                       errors.name
                         ? "border-red-400 focus:ring-red-200"
                         : "border-slate-200 focus:border-green-600 focus:ring-green-100"
@@ -327,7 +327,7 @@ const FarmerForm = () => {
                     value={formData.fatherName}
                     onChange={handleChange}
                     placeholder="e.g. Shivram Patel"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -350,7 +350,7 @@ const FarmerForm = () => {
                   onChange={handleChange}
                   placeholder="XXXX XXXX XXXX"
                   maxLength={14}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 tracking-wide font-mono transition-all ${
+                  className={`w-full pl-10 pr-4 py-2 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 tracking-wide font-mono transition-all ${
                     errors.adhaarNumber
                       ? "border-red-400 focus:ring-red-200"
                       : "border-slate-200 focus:border-green-600 focus:ring-green-100"
@@ -378,7 +378,7 @@ const FarmerForm = () => {
                     value={formData.village}
                     onChange={handleChange}
                     placeholder="e.g. Rampur"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                    className={`w-full pl-10 pr-4 py-2 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                       errors.village
                         ? "border-red-400 focus:ring-red-200"
                         : "border-slate-200 focus:border-green-600 focus:ring-green-100"
@@ -404,7 +404,7 @@ const FarmerForm = () => {
                     value={formData.district}
                     onChange={handleChange}
                     placeholder="e.g. Indore"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
+                    className={`w-full pl-10 pr-4 py-2 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                       errors.district
                         ? "border-red-400 focus:ring-red-200"
                         : "border-slate-200 focus:border-green-600 focus:ring-green-100"
@@ -430,7 +430,7 @@ const FarmerForm = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all cursor-pointer"
+                  className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-900 bg-slate-50/50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-100 outline-none transition-all cursor-pointer"
                 >
                   {INDIAN_STATES.map((st) => (
                     <option key={st} value={st}>
@@ -452,7 +452,7 @@ const FarmerForm = () => {
                 value={formData.address}
                 onChange={handleChange}
                 placeholder="House No, Ward No, Tehsil, Landmark..."
-                className={`w-full px-3.5 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all resize-none ${
+                className={`w-full px-3.5 py-2 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all resize-none ${
                   errors.address
                     ? "border-red-400 focus:ring-red-200"
                     : "border-slate-200 focus:border-green-600 focus:ring-green-100"

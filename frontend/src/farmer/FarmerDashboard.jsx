@@ -22,7 +22,6 @@ import CentersView from "./CentersView";
 import MetricCardsForFarmerDashboard from "./MetricCardsForFarmerDashboard";
 
 const FarmerDashboard = () => {
-
   const [farmer, setFarmer] = useState(null);
   const [isProfileComplete, setIsProfileComplete] = useState(true);
   const [bookings, setBookings] = useState([]);
@@ -41,16 +40,17 @@ const FarmerDashboard = () => {
         setIsProfileComplete(profileRes.data.data.isProfileComplete);
       }
 
-        const bookingsRes = await api.get("/farmer/my-bookings").catch(() => null);
-        if (bookingsRes?.data) {
-          const list = Array.isArray(bookingsRes.data.data)
-            ? bookingsRes.data.data
-            : Array.isArray(bookingsRes.data)
+      const bookingsRes = await api
+        .get("/farmer/my-bookings")
+        .catch(() => null);
+      if (bookingsRes?.data) {
+        const list = Array.isArray(bookingsRes.data.data)
+          ? bookingsRes.data.data
+          : Array.isArray(bookingsRes.data)
             ? bookingsRes.data
             : [];
-          setBookings(list);
-        }
-
+        setBookings(list);
+      }
     } catch (err) {
       console.error("Dashboard data load error:", err);
     } finally {
@@ -67,7 +67,6 @@ const FarmerDashboard = () => {
     setRefreshing(true);
     fetchData();
   };
- 
 
   if (loading) {
     return (
@@ -76,16 +75,17 @@ const FarmerDashboard = () => {
           <div className="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center animate-pulse">
             <Sprout className="w-7 h-7" />
           </div>
-          <p className="text-sm font-semibold text-slate-600">Loading your farmer dashboard...</p>
+          <p className="text-sm font-semibold text-slate-600">
+            Loading your farmer dashboard...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-4 px-4 sm:px-6 lg:px-18">
-      <div className="max-w-9xl mx-auto space-y-4">
-
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-2 px-4 sm:px-6 lg:px-6">
+      <div className="max-w-9xl mx-auto space-y-2">
         {/* 1. INCOMPLETE PROFILE BANNER ALERT */}
         {!isProfileComplete && (
           <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
@@ -98,7 +98,9 @@ const FarmerDashboard = () => {
                   Complete Your Farmer Profile / किसान प्रोफाइल पूरी करें
                 </h3>
                 <p className="text-xs text-slate-600 mt-0.5 max-w-xl">
-                  You need to fill in your village, district, and address details to unlock mandi queue slot booking and direct MSP payments.
+                  You need to fill in your village, district, and address
+                  details to unlock mandi queue slot booking and direct MSP
+                  payments.
                 </p>
               </div>
             </div>
@@ -130,7 +132,8 @@ const FarmerDashboard = () => {
               <p className="mt-1 text-sm text-green-100 max-w-xl leading-relaxed">
                 {farmer?.village ? (
                   <span>
-                    Village: <strong>{farmer.village}</strong>, District: <strong>{farmer.district}</strong> ({farmer.state})
+                    Village: <strong>{farmer.village}</strong>, District:{" "}
+                    <strong>{farmer.district}</strong> ({farmer.state})
                   </span>
                 ) : (
                   "Welcome to the official FarmLink procurement portal. Manage your mandi queues and MSP tokens effortlessly."
@@ -146,24 +149,27 @@ const FarmerDashboard = () => {
                 className="p-3 rounded-xl bg-white/15 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white transition-all cursor-pointer disabled:opacity-50"
                 title="Refresh Dashboard Data"
               >
-                <RefreshCw className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`} />
+                <RefreshCw
+                  className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}
+                />
               </button>
 
               <button
-                onClick={() =>{ 
-                  setActiveTab("bookings")
-                  setShowBookSlot(true)}}
+                onClick={() => {
+                  setActiveTab("bookings");
+                  setShowBookSlot(true);
+                }}
                 className="px-5 py-3 rounded-xl bg-white text-emerald-900 hover:bg-green-50 font-bold text-xs shadow-lg shadow-black/10 transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4 text-emerald-700" />
                 <span>Book Queue Token</span>
               </button>
-               <BookSlot
-                  showBookSlot={showBookSlot}
-                  setShowBookSlot={setShowBookSlot}
-                />
             </div>
           </div>
+           <BookSlot
+              showBookSlot={showBookSlot}
+              setShowBookSlot={setShowBookSlot}
+            />
         </div>
 
         {/* 3. METRIC CARDS GRID */}
@@ -245,7 +251,6 @@ const FarmerDashboard = () => {
 
         {/* 10. TAB 6: CENTERS VIEW */}
         {activeTab === "centers" && <CentersView />}
-          
       </div>
     </div>
   );

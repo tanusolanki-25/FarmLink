@@ -116,7 +116,7 @@ function BookSlot({ showBookSlot, setShowBookSlot }) {
   return (
     <>
       {showBookSlot && (
-         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm px-4 pt-20 pb-6 overflow-y-auto">
+         <div className="fixed inset-0 z-50 flex pt-10 items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto">
           <div className="p-4 sm:p-6 w-full max-w-lg rounded-3xl bg-white shadow-2xl overflow-y-auto animate-[fadeIn_.3s_ease] shadow-sm mx-auto space-y-4">
             {/* Header */}
             <div className="flex">
@@ -171,8 +171,9 @@ function BookSlot({ showBookSlot, setShowBookSlot }) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-                <Wheat className="w-3.5 h-3.5 text-green-500" /> Crop Type
+              <label className="block text-xs  font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+                <span className="inline-flex items-center gap-1.5">
+                <Wheat className="w-3.5 h-3.5 text-green-500" /> Crop Type</span>
                 <span className="text-red-500">*</span>
               </label>
                <select
