@@ -158,7 +158,6 @@ const rejectBooking = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, updated, "Booing is rejected"));
 });
 
-// Next token call: Redis counter badhao + sabko live batao
 const callNext = asyncHandler(async (req, res) => {
   const officer = await getOfficer(req.user.id);
   if (!officer?.centerId) {
@@ -168,7 +167,6 @@ const callNext = asyncHandler(async (req, res) => {
   const currentPosition = await redis.incr(key);
   await redis.expire(key, 60 * 60 * 24);
 
-  // Socket.IO set hai toh farmers ko turant update bhejo
   const io = req.app.get("io");
   if (io) {
     io.to(`center-${officer.centerId}`).emit("queue-updated", {

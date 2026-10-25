@@ -7,7 +7,6 @@ import { generateOTP, getOtpHtml } from "../services/generateOtp.js";
 import { client, sendEmail } from "../services/email.service.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
-// import crypto from "crypto";
 import crypto from "node:crypto";
 
 const generateAccessAndRefreshToken = async (userId) => {
@@ -604,14 +603,6 @@ const changePassword = asyncHandler(async (req, res) => {
 
   if (!user) {
     throw new ApiError(404, "User not found");
-  }
-
-  // OAuth se aaye user ka koi password hi nahi hota — unhe alag message do
-  if (!user.passwordHash) {
-    throw new ApiError(
-      400,
-      "This account uses Google sign-in and has no password to change"
-    );
   }
 
   const isPasswordCorrect = await verifyPassword(

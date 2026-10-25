@@ -58,7 +58,7 @@ function AdminUsers() {
   const TAB_LABELS = { all: "All", farmer: "Farmers", officer: "Officers", admin: "Admins" };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
         <input

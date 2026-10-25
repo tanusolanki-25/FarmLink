@@ -79,8 +79,8 @@ const OfficerDashboard = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-4 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto space-y-5">
+    <div className="h-[calc(100vh-4rem)] bg-slate-50/80 py-2 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto space-y-3">
 
         {/* ── Hero Banner ────────────────────────────── */}
         <div className="bg-gradient-to-r from-emerald-800 via-green-700 to-emerald-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-indigo-950/20 relative overflow-hidden">

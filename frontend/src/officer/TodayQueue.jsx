@@ -75,7 +75,7 @@ function TodayQueue() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
 
       {/* Call Next + Current Token */}
       <div className="bg-gradient-to-r from-emerald-700 to-green-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-indigo-600/20">

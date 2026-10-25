@@ -4,7 +4,6 @@
 
 **Live demo:** https://farm-link-sand.vercel.app/
 
-<!-- Add 3-4 screenshots or one short GIF here: farmer queue page, officer dashboard, admin overview -->
 Admin overview
 <img width="1752" height="918" alt="image" src="https://github.com/user-attachments/assets/dbe87d52-7249-4341-ac1c-da95390488e5" />
 1.

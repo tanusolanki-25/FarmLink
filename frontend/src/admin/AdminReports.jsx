@@ -113,7 +113,7 @@ function AdminReports() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
 
       {/* ── Summary Cards ── */}
       {!loading && (
