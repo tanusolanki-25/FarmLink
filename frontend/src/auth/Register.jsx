@@ -4,8 +4,6 @@ import {
   Mail,
   Lock,
   Phone,
-  Eye,
-  EyeOff,
   Sprout,
   ArrowRight,
   Loader2,
@@ -17,9 +15,11 @@ import {
 import toast from "react-hot-toast";
 import api from "../api/axios";
 import farmerImg from "../assets/farmer.jpg";
+import { useLanguage } from "../context/LanguageContext";
 
 const Register = () => {
   const navigate = useNavigate();
+  const {t} = useLanguage()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -150,15 +150,15 @@ const Register = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <Sprout className="w-4 h-4 text-emerald-300" />
-              <span>Farmer Procurement Portal</span>
+              <span>{t("signUp.portalBadge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
-              Fair Prices. <br />
-              <span className="text-emerald-300">Smart Procurement.</span>
+              {t("signUp.welcomeTitle1")}<br />
+              <span className="text-emerald-300">{t("signUp.welcomeTitle2")}.</span>
             </h2>
             <p className="mt-2 text-sm text-green-100/90 leading-relaxed">
-              Connect directly with government procurement centers, view transparent MSP rates, and schedule queue slots smoothly.
+              {t("signUp.welcomeDescription")}
             </p>
           </div>
 
@@ -169,8 +169,8 @@ const Register = () => {
                 <TrendingUp className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Live MSP Rate Updates</h4>
-                <p className="text-[11px] text-green-100/80">Get verified mandi and procurement prices</p>
+                <h4 className="text-xs font-semibold text-white">{t("signUp.liveMspTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signUp.liveMspDesc")}</p>
               </div>
             </div>
 
@@ -179,8 +179,8 @@ const Register = () => {
                 <Clock className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Smart Queue Tracker</h4>
-                <p className="text-[11px] text-green-100/80">Zero waiting hours with token time-slots</p>
+                <h4 className="text-xs font-semibold text-white">{t("signUp.smartQueueTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signUp.smartQueueDesc")}</p>
               </div>
             </div>
 
@@ -189,18 +189,18 @@ const Register = () => {
                 <Award className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Guaranteed Direct Payment</h4>
-                <p className="text-[11px] text-green-100/80">Fast bank settlement upon grain verification</p>
+                <h4 className="text-xs font-semibold text-white">{t("signUp.guaranteedPaymentTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signUp.guaranteedPaymentDesc")}</p>
               </div>
             </div>
           </div>
 
           {/* Bottom Social Proof / Trust Badge */}
           <div className="relative z-10 pt-4 border-t border-white/15 flex items-center justify-between text-xs text-green-100/80">
-            <span>Trusted by thousands of farmers</span>
+            <span>{t("signUp.trustedFarmers")}</span>
             <div className="flex items-center gap-1 font-semibold text-emerald-300">
               <ShieldCheck className="w-4 h-4" />
-              <span>Verified System</span>
+              <span>{t("signUp.verifiedSystem")}</span>
             </div>
           </div>
         </div>
@@ -209,10 +209,10 @@ const Register = () => {
         <div className="lg:col-span-7 p-6 sm:p-10 flex flex-col justify-center">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-              Create an account
+              {t("signUp.formTitle")}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Join FarmLink to manage your farm produce sales or center administration.
+               {t("signUp.formSubtitle")}
             </p>
           </div>
 
@@ -232,8 +232,8 @@ const Register = () => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-slate-900 text-xs sm:text-sm">Farmer / किसान</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Sell produce & book queue</p>
+                    <h4 className="font-semibold text-slate-900 text-xs sm:text-sm">{t("signUp.roleFarmerTitle")}</h4>
+                    <p className="text-[11px] text-slate-500 mt-0.5">{t("signUp.roleFarmerSubtitle")}</p>
                   </div>
                 </div>
               </div>
@@ -241,7 +241,7 @@ const Register = () => {
             {/* Email Address */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Email Address <span className="text-red-500">*</span>
+                {t("signUp.emailLabel")}<span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -268,7 +268,7 @@ const Register = () => {
             {/* Phone Number */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Phone Number <span className="text-xs text-slate-400 font-normal">(Optional for SMS alerts)</span>
+               {t("signUp.phoneLabel1")} <span className="text-xs text-slate-400 font-normal">{t("signUp.phoneLabel2")}</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -279,7 +279,7 @@ const Register = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="10-digit mobile number"
+                  placeholder={t("signUp.phonePlaceholder")}
                   maxLength={10}
                   className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     errors.phone
@@ -298,7 +298,7 @@ const Register = () => {
               {/* Password */}
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Password <span className="text-red-500">*</span>
+                  {t("signUp.passwordLabel")}<span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -309,7 +309,7 @@ const Register = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Min. 6 characters"
+                    placeholder={t("signUp.passwordPlaceholder")}
                     className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                       errors.password
                         ? "border-red-400 focus:ring-red-200"
@@ -326,7 +326,7 @@ const Register = () => {
               {/* Confirm Password */}
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Confirm Password <span className="text-red-500">*</span>
+                 {t("signUp.confirmPasswordLabel")}<span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -337,7 +337,7 @@ const Register = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    placeholder="Re-enter password"
+                    placeholder={t("signUp.confirmPasswordPlaceholder")}
                     className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                       errors.confirmPassword
                         ? "border-red-400 focus:ring-red-200"
@@ -386,13 +386,12 @@ const Register = () => {
                   className="mt-0.5 h-4 w-4 rounded border-slate-300 text-green-600 focus:ring-green-500 cursor-pointer"
                 />
                 <span className="text-xs text-slate-600">
-                  I agree to the{" "}
+                  {t("signUp.agreeText1")}{" "}
                   <a href="#terms" className="text-green-600 hover:underline font-medium">
-                    Terms of Service
+                    {t("signUp.agreeText2")}
                   </a>{" "}
-                  and{" "}
                   <a href="#privacy" className="text-green-600 hover:underline font-medium">
-                    Privacy Policy
+                    {t("signUp.agreeText3")}
                   </a>
                   .
                 </span>
@@ -411,11 +410,11 @@ const Register = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Creating Account...</span>
+                  <span>{t("signUp.submitButton2")}</span>
                 </>
               ) : (
                 <>
-                  <span>Create Account</span>
+                  <span>{t("signUp.submitButton")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -423,12 +422,12 @@ const Register = () => {
 
             {/* Footer note */}
             <p className="text-center text-xs sm:text-sm text-slate-600 pt-2">
-              Already have an account?{" "}
+              {t("signUp.alreadyHaveAccount")}{" "}
               <Link
                 to="/login"
                 className="text-green-600 hover:text-green-700 font-semibold hover:underline"
               >
-                Sign In
+                {t("signUp.signInLink")}
               </Link>
             </p>
           </form>

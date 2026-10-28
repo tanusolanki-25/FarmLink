@@ -1,4 +1,6 @@
 import { ChevronDown } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
+import translations from "../../context/translations";
 
 const faqs = [
   {
@@ -34,34 +36,37 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  const {t, lang} = useLanguage()
+  const questions = translations.faq.questions;
+
   return (
     <section className="bg-slate-50 py-10">
       <div className="max-w-5xl mx-auto px-5">
         <div className="text-center mb-12">
           <h2 className="mt-5 text-4xl font-bold">
-            Frequently Asked Questions
+            {t("faq.title")}
           </h2>
 
           <p className="mt-4 text-gray-600 text-lg">
-            Everything you need to know before booking your procurement slot.
+            {t("faq.subtitle")}
           </p>
         </div>
 
         <div className="space-y-3">
-          {faqs.map((faq, index) => (
+          {questions.map((faq, index) => (
             <details
               key={index}
               className="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               open={index === 0}
             >
               <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-lg">
-                {faq.question}
+                {faq.question[lang]}
 
                 <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open:rotate-180" />
               </summary>
 
               <p className="mt-4 leading-7 text-gray-600">
-                {faq.answer}
+                {faq.answer[lang]}
               </p>
             </details>
           ))}

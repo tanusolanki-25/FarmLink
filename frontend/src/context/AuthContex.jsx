@@ -18,20 +18,20 @@ export const AuthProvider = ({children}) =>{
   const [loading, setLoading] = useState(true)
 
 
-   useEffect(() => {
-    api.get("/auth/current-user")
-      .then(async (res) => {
-        const loggedInUser = res.data.data
-        if (loggedInUser) {
-          const profileCompleted = await checkProfileCompleted(loggedInUser.role)
-          setUser({ ...loggedInUser, profileCompleted })
-        } else {
-          setUser(null)
-        }
-      })
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false))
-  }, [])
+  //  useEffect(() => {
+  //   api.get("/auth/current-user")
+  //     .then(async (res) => {
+  //       const loggedInUser = res.data.data
+  //       if (loggedInUser) {
+  //         const profileCompleted = await checkProfileCompleted(loggedInUser.role)
+  //         setUser({ ...loggedInUser, profileCompleted })
+  //       } else {
+  //         setUser(null)
+  //       }
+  //     })
+  //     .catch(() => setUser(null))
+  //     .finally(() => setLoading(false))
+  // }, [])
   
   const login = async (email, password) => {
   const res = await api.post("/auth/login", { email, password })

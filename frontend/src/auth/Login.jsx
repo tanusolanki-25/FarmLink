@@ -14,10 +14,12 @@ import {
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContex";
 import fieldImg from "../assets/field.jpg";
+import { useLanguage } from "../context/LanguageContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const {t} = useLanguage()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -119,15 +121,15 @@ const Login = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <Sprout className="w-4 h-4 text-emerald-300" />
-              <span>Farmer Procurement Portal</span>
+              <span>{t("signIn.portalBadge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
-              Welcome Back to <br />
+             {t("signIn.welcomeTitle")} <br />
               <span className="text-emerald-300">FarmLink.</span>
             </h2>
             <p className="mt-2 text-sm text-green-100/90 leading-relaxed">
-              Log in to manage your crop appointments, check real-time queue tokens, and track government procurement payments.
+              {t("signIn.welcomeDescription")}
             </p>
           </div>
 
@@ -138,8 +140,8 @@ const Login = () => {
                 <Clock className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Live Queue Tracking</h4>
-                <p className="text-[11px] text-green-100/80">Track your token position and avoid long mandi waits</p>
+                <h4 className="text-xs font-semibold text-white">{t("signIn.liveQueueTrackingTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signIn.liveQueueTrackingDesc")}</p>
               </div>
             </div>
 
@@ -148,8 +150,8 @@ const Login = () => {
                 <TrendingUp className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Verified MSP Pricing</h4>
-                <p className="text-[11px] text-green-100/80">Government approved minimum support price records</p>
+                <h4 className="text-xs font-semibold text-white">{t("signIn.verifiedMspTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signIn.verifiedMspDesc")}</p>
               </div>
             </div>
 
@@ -158,18 +160,18 @@ const Login = () => {
                 <Layers className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Digital Procurement Slips</h4>
-                <p className="text-[11px] text-green-100/80">Instant receipts and direct bank payment receipts</p>
+                <h4 className="text-xs font-semibold text-white">{t("signIn.digitalSlipsTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("signIn.digitalSlipsDesc")}</p>
               </div>
             </div>
           </div>
 
           {/* Bottom Trust Badge */}
           <div className="relative z-10 pt-4 border-t border-white/15 flex items-center justify-between text-xs text-green-100/80">
-            <span>Fast & Secure Authentication</span>
+            <span>{t("signIn.fastSecureAuth")}</span>
             <div className="flex items-center gap-1 font-semibold text-emerald-300">
               <ShieldCheck className="w-4 h-4" />
-              <span>Encrypted Session</span>
+              <span>{t("signIn.encryptedSession")}</span>
             </div>
           </div>
         </div>
@@ -178,10 +180,10 @@ const Login = () => {
         <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-center">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-              Sign In to Your Account
+              {t("signIn.formTitle")}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Enter your registered email and password to access your dashboard.
+              {t("signIn.formSubtitle")}
             </p>
           </div>
 
@@ -189,7 +191,7 @@ const Login = () => {
             {/* Email Address */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Email Address <span className="text-red-500">*</span>
+               {t("signIn.emailLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -200,7 +202,7 @@ const Login = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="farmer@example.com"
+                  placeholder={t("signIn.emailPlaceholder")}
                   className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     errors.email
                       ? "border-red-400 focus:ring-red-200"
@@ -217,13 +219,13 @@ const Login = () => {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label className="block text-xs font-medium text-slate-700">
-                  Password <span className="text-red-500">*</span>
+                  {t("signIn.passwordLabel")} <span className="text-red-500">*</span>
                 </label>
                 <Link
                   to="/forgot-password"
                   className="text-xs text-green-600 hover:text-green-700 font-medium hover:underline"
                 >
-                  Forgot password?
+                 {t("signIn.forgotPassword")}
                 </Link>
               </div>
               <div className="relative">
@@ -235,7 +237,7 @@ const Login = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Enter your password"
+                  placeholder={t("signIn.passwordPlaceholder")}
                   className={`w-full pl-10 pr-4 py-2.5 rounded-xl border text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all ${
                     errors.password
                       ? "border-red-400 focus:ring-red-200"
@@ -258,7 +260,7 @@ const Login = () => {
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 rounded border-slate-300 text-green-600 focus:ring-green-500 cursor-pointer"
                 />
-                <span className="text-xs text-slate-600">Remember this device</span>
+                <span className="text-xs text-slate-600">{t("signIn.rememberDevice")}</span>
               </label>
             </div>
 
@@ -271,33 +273,24 @@ const Login = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Signing in...</span>
+                  <span>{t("signIn.submitButton")}...</span>
                 </>
               ) : (
                 <>
-                  <span>Sign In</span>
+                  <span>{t("signIn.submitButton")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
 
-             {/* Social Sign-In Divider & Button */}
-          <div className="mt-2">
-            <div className="relative flex items-center justify-center my-4">
-              <div className="border-t border-gray-200 w-full"></div>
-              <span className="bg-white px-3 text-xs text-gray-400 uppercase font-medium">Or</span>
-              <div className="border-t border-gray-200 w-full"></div>
-            </div>
-          </div>
-
             {/* Switch to Register */}
             <p className="text-center text-xs sm:text-sm text-slate-600 pt-3">
-              Don't have an account yet?{" "}
+              {t("signIn.noAccountPrompt")}{" "}
               <Link
                 to="/register"
                 className="text-green-600 hover:text-green-700 font-semibold hover:underline"
               >
-                Create an account
+               {t("signIn.createAccount")}
               </Link>
             </p>
           </form>
