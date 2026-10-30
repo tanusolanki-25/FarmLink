@@ -1,8 +1,10 @@
+import { useLanguage } from "../context/LanguageContext";
 import { Building, Calendar, ShieldCheck, TrendingUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 function MetricCardsForFarmerDashboard() {
+  const { t } = useLanguage();
   const [farmer, setFarmer] = useState(null);
   const [centers, setCenters] = useState([]);
   const [isProfileComplete, setIsProfileComplete] = useState(true);
@@ -54,13 +56,13 @@ function MetricCardsForFarmerDashboard() {
       <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-            Active Tokens
+            {t("metricCards.activeTokens")}
           </p>
           <h3 className="text-2xl font-extrabold text-slate-900 mt-1">
             {activeBookingsCount}
           </h3>
           <p className="text-[11px] text-green-600 font-medium mt-0.5">
-            Ready for center dispatch
+            {t("metricCards.readyForDispatch")}
           </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-green-50 border border-green-100 text-green-600 flex items-center justify-center">
@@ -71,13 +73,13 @@ function MetricCardsForFarmerDashboard() {
       <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-            Available Mandis
+            {t("metricCards.availableMandis")}
           </p>
           <h3 className="text-2xl font-extrabold text-slate-900 mt-1">
             {centers.length}
           </h3>
           <p className="text-[11px] text-blue-600 font-medium mt-0.5">
-            Active procurement hubs
+            {t("metricCards.activeProcurementHubs")}
           </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
@@ -88,13 +90,13 @@ function MetricCardsForFarmerDashboard() {
       <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-            MSP Wheat Rate
+            {t("metricCards.mspWheatRate")}
           </p>
           <h3 className="text-2xl font-extrabold text-slate-900 mt-1">
             ₹2,275
           </h3>
           <p className="text-[11px] text-emerald-600 font-medium mt-0.5">
-            / Quintal (Grade A)
+            {t("metricCards.perQuintal")}
           </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
@@ -105,13 +107,13 @@ function MetricCardsForFarmerDashboard() {
       <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
         <div>
           <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-            Kisan Profile
+            {t("metricCards.kisanProfile")}
           </p>
           <h3 className="text-base font-bold text-slate-900 mt-1">
-            {isProfileComplete ? "Complete ✓" : "Incomplete"}
+            {isProfileComplete ? t("metricCards.complete") : t("metricCards.incomplete")}
           </h3>
           <p className="text-[11px] text-slate-500 mt-0.5">
-            {farmer?.adhaarNumber ? "Aadhaar Linked" : "Basic Registration"}
+            {farmer?.adhaarNumber ? t("metricCards.aadhaarLinked") : t("metricCards.basicRegistration")}
           </p>
         </div>
         <div

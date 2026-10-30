@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { BadgeCheck, CheckCircle2, ClipboardList, Clock, Loader2, PackageCheck, Phone, ShieldCheck, ThumbsDown, ThumbsUp, Wheat, XCircle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -6,6 +7,7 @@ import ApproveModal from "./ApproveModalByOfficer";
 import api from "../api/axios";
 
 function BookingCard({ booking, onRefresh }) {
+  const { t } = useLanguage();
   const [procurementOpen, setProcurementOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
   const [actionLoading, setActionLoading] = useState(null);
@@ -32,7 +34,7 @@ function BookingCard({ booking, onRefresh }) {
         {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Token</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{t("bookingCard.token")}</span>
             <h3 className="text-2xl font-extrabold text-green-600">#{booking.token || booking.id}</h3>
           </div>
           <StatusBadge status={booking.status} />
@@ -66,7 +68,7 @@ function BookingCard({ booking, onRefresh }) {
             <div className="text-xs text-green-800">
               <span className="font-bold">{booking.procurement.crop}</span>
               {" · "}{booking.procurement.quantity} kg
-              {" · "}Grade <span className="font-bold">{booking.procurement.quality}</span>
+              {" · "}{t("bookingCard.grade")} <span className="font-bold">{booking.procurement.quality}</span>
             </div>
           </div>
         )}
@@ -74,7 +76,7 @@ function BookingCard({ booking, onRefresh }) {
         {/* Time */}
         <div className="flex items-center gap-1.5 text-xs text-slate-400">
           <Clock className="w-3.5 h-3.5" />
-          <span>Slot: {booking.time || "—"} · {booking.date ? new Date(booking.date).toLocaleDateString("en-IN") : "—"}</span>
+          <span>{t("bookingCard.slot")} {booking.time || "—"} · {booking.date ? new Date(booking.date).toLocaleDateString("en-IN") : "—"}</span>
         </div>
 
         {/* Action Buttons */}
@@ -86,7 +88,7 @@ function BookingCard({ booking, onRefresh }) {
               className="px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer disabled:opacity-60 shadow-sm shadow-blue-600/20"
             >
               {actionLoading === "Verify" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ShieldCheck className="w-3.5 h-3.5" />}
-              Verify Farmer
+              {t("bookingCard.verifyFarmer")}
             </button>
           )}
 
@@ -96,7 +98,7 @@ function BookingCard({ booking, onRefresh }) {
               className="px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-sm shadow-indigo-600/20"
             >
               <ClipboardList className="w-3.5 h-3.5" />
-              Record Procurement
+              {t("bookingCard.recordProcurement")}
             </button>
           )}
 
@@ -107,7 +109,7 @@ function BookingCard({ booking, onRefresh }) {
                 className="px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-sm shadow-emerald-600/20"
               >
                 <ThumbsUp className="w-3.5 h-3.5" />
-                Approve
+                {t("bookingCard.approve")}
               </button>
               <button
                 onClick={() => {
@@ -118,7 +120,7 @@ function BookingCard({ booking, onRefresh }) {
                 className="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
               >
                 {actionLoading === "Reject" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <ThumbsDown className="w-3.5 h-3.5" />}
-                Reject
+                {t("bookingCard.reject")}
               </button>
             </>
           )}
@@ -133,12 +135,12 @@ function BookingCard({ booking, onRefresh }) {
               className="px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-sm shadow-indigo-600/20"
             >
               {actionLoading === "Complete" ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <PackageCheck className="w-3.5 h-3.5" />}
-              Mark Complete
+              {t("bookingCard.markComplete")}
             </button>
           )}
 
           {(status === "rejected" || status === "completed") && (
-            <span className="text-xs text-slate-400 italic py-1">No further actions</span>
+            <span className="text-xs text-slate-400 italic py-1">{t("bookingCard.noFurtherActions")}</span>
           )}
         </div>
       </div>

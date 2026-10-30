@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState } from "react";
 import {
   Search,
@@ -44,6 +45,7 @@ function StatusBadge({ status }) {
 
 /* ─── Main Component ─────────────────────────────────────── */
 export default function BookingTracker() {
+  const { t } = useLanguage();
   const [inputId, setInputId]       = useState("");
   const [booking, setBooking]       = useState(null);
   const [queue, setQueue]           = useState(null);
@@ -101,9 +103,9 @@ export default function BookingTracker() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">Track Booking by ID</h2>
+          <h2 className="text-lg font-bold text-slate-900">{t("bookingTracker.heading")}</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Enter your Booking ID to view full details and live queue position
+            {t("bookingTracker.subheading")}
           </p>
         </div>
         {booking && (
@@ -119,7 +121,7 @@ export default function BookingTracker() {
       </div>
 
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="flex gap-3">
+      <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
             <Hash className="w-4 h-4" />
@@ -128,7 +130,7 @@ export default function BookingTracker() {
             type="number"
             value={inputId}
             onChange={(e) => setInputId(e.target.value)}
-            placeholder="Enter Booking ID  e.g. 12"
+            placeholder={t("bookingTracker.placeholder")}
             min={1}
             className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 bg-white text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all shadow-sm"
           />
@@ -136,14 +138,14 @@ export default function BookingTracker() {
         <button
           type="submit"
           disabled={loading || !inputId}
-          className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:opacity-50 text-white text-sm font-semibold shadow-md shadow-green-600/20 transition-all cursor-pointer disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:opacity-50 text-white text-sm font-semibold shadow-md shadow-green-600/20 transition-all cursor-pointer disabled:cursor-not-allowed"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
             <Search className="w-4 h-4" />
           )}
-          <span>{loading ? "Searching..." : "Track"}</span>
+          <span>{loading ? t("bookingTracker.searching") : t("bookingTracker.track")}</span>
         </button>
       </form>
 
@@ -151,7 +153,7 @@ export default function BookingTracker() {
       {loading && (
         <div className="bg-white rounded-3xl border border-slate-200 p-12 flex flex-col items-center gap-3 shadow-sm">
           <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-slate-500 font-medium">Fetching booking details...</p>
+          <p className="text-sm text-slate-500 font-medium">{t("bookingTracker.fetchingDetails")}</p>
         </div>
       )}
 
@@ -161,9 +163,9 @@ export default function BookingTracker() {
           <div className="w-14 h-14 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
             <AlertTriangle className="w-7 h-7 text-red-500" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">Booking Not Found</h3>
+          <h3 className="text-base font-bold text-slate-900">{t("bookingTracker.notFoundTitle")}</h3>
           <p className="text-xs text-slate-500 max-w-xs">
-            No booking found with ID <strong>#{inputId}</strong>. Please check the ID and try again.
+            {t("bookingTracker.notFoundDesc")} <strong>#{inputId}</strong>. {t("bookingTracker.notFoundDesc2")}
           </p>
         </div>
       )}
@@ -172,13 +174,13 @@ export default function BookingTracker() {
       {!loading && booking && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
           {/* Card Top Bar */}
-          <div className="bg-gradient-to-r from-emerald-800 to-green-700 px-6 py-5 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-emerald-800 to-green-700 px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center">
                 <Ticket className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-[11px] text-green-200 font-semibold uppercase tracking-wider">Queue Token</p>
+                <p className="text-[11px] text-green-200 font-semibold uppercase tracking-wider">{t("bookingTracker.queueToken")}</p>
                 <h3 className="text-2xl font-extrabold text-white">
                   #TK-{booking.token ?? booking.id}
                 </h3>
@@ -191,7 +193,7 @@ export default function BookingTracker() {
           </div>
 
           {/* Card Body */}
-          <div className="p-6 space-y-5">
+          <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
             {/* Info Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Center Name */}
@@ -200,7 +202,7 @@ export default function BookingTracker() {
                   <Building className="w-4 h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Procurement Center</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.procurementCenter")}</p>
                   <p className="text-sm font-bold text-slate-900 mt-0.5">
                     {booking.center?.centerName ?? `Center #${booking.centerId}`}
                   </p>
@@ -217,7 +219,7 @@ export default function BookingTracker() {
                     <MapPin className="w-4 h-4 text-rose-500" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Location</p>
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.location")}</p>
                     <p className="text-sm font-bold text-slate-900 mt-0.5">{booking.center.location}</p>
                   </div>
                 </div>
@@ -229,7 +231,7 @@ export default function BookingTracker() {
                   <Calendar className="w-4 h-4 text-purple-600" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Appointment Date</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.appointmentDate")}</p>
                   <p className="text-sm font-bold text-slate-900 mt-0.5">
                     {new Date(booking.date).toLocaleDateString("en-IN", {
                       weekday: "long",
@@ -247,7 +249,7 @@ export default function BookingTracker() {
                   <Clock className="w-4 h-4 text-amber-600" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Time Slot</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.timeSlot")}</p>
                   <p className="text-sm font-bold text-slate-900 mt-0.5">{booking.time}</p>
                 </div>
               </div>
@@ -259,7 +261,7 @@ export default function BookingTracker() {
                     <Landmark className="w-4 h-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Payment</p>
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.payment")}</p>
                     <p className="text-sm font-bold text-slate-900 mt-0.5">
                       ₹{booking.payment.amount?.toLocaleString("en-IN") ?? "—"}
                     </p>
@@ -275,9 +277,9 @@ export default function BookingTracker() {
                     <Users className="w-4 h-4 text-emerald-600" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Procurement</p>
+                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">{t("bookingTracker.procurement")}</p>
                     <p className="text-sm font-bold text-slate-900 mt-0.5">
-                      {booking.procurement.quantity ?? "—"} Quintals
+                      {booking.procurement.quantity ?? "—"} {t("bookingTracker.quintals")}
                     </p>
                     <p className="text-xs text-slate-500">{booking.procurement.crop ?? ""}</p>
                   </div>
@@ -289,7 +291,7 @@ export default function BookingTracker() {
             {!queue && (
               <div className="mt-4 border-t border-slate-100 pt-4">
                 <p className="text-xs text-slate-400 text-center">
-                  Live queue data unavailable for this booking.
+                  {t("bookingTracker.noQueueData")}
                 </p>
               </div>
             )}

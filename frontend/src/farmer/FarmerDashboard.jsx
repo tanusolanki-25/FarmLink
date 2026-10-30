@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -22,6 +23,7 @@ import CentersView from "./CentersView";
 import MetricCardsForFarmerDashboard from "./MetricCardsForFarmerDashboard";
 
 const FarmerDashboard = () => {
+  const { t } = useLanguage();
   const [farmer, setFarmer] = useState(null);
   const [isProfileComplete, setIsProfileComplete] = useState(true);
   const [bookings, setBookings] = useState([]);
@@ -76,7 +78,7 @@ const FarmerDashboard = () => {
             <Sprout className="w-7 h-7" />
           </div>
           <p className="text-sm font-semibold text-slate-600">
-            Loading your farmer dashboard...
+            {t("farmerDashboard.loading")}
           </p>
         </div>
       </div>
@@ -84,8 +86,8 @@ const FarmerDashboard = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-2 px-4 sm:px-6 lg:px-6">
-      <div className="max-w-9xl mx-auto space-y-2">
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-5 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-4">
         {/* 1. INCOMPLETE PROFILE BANNER ALERT */}
         {!isProfileComplete && (
           <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
@@ -95,7 +97,7 @@ const FarmerDashboard = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-slate-900 text-base">
-                  Complete Your Farmer Profile / किसान प्रोफाइल पूरी करें
+                  {t("farmerDashboard.incompleteProfileTitle")}
                 </h3>
                 <p className="text-xs text-slate-600 mt-0.5 max-w-xl">
                   You need to fill in your village, district, and address
@@ -109,7 +111,7 @@ const FarmerDashboard = () => {
               to="/farmer/profile"
               className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-md shadow-amber-500/20 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
             >
-              <span>Complete Profile Now</span>
+              <span>{t("farmerDashboard.completeProfileNow")}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -123,20 +125,20 @@ const FarmerDashboard = () => {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold text-green-100 mb-3">
                 <Sprout className="w-3.5 h-3.5 text-emerald-300" />
-                <span>Kisan Dashboard</span>
+                <span>{t("farmerDashboard.badge")}</span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Namaste, {farmer?.name || "Kisan Brother"}! 🌾
+                {t("farmerDashboard.greeting")}, {farmer?.name || t("farmerDashboard.kisanBrother")}! 🌾
               </h1>
               <p className="mt-1 text-sm text-green-100 max-w-xl leading-relaxed">
                 {farmer?.village ? (
                   <span>
-                    Village: <strong>{farmer.village}</strong>, District:{" "}
+                    {t("farmerDashboard.village")} <strong>{farmer.village}</strong>, {t("farmerDashboard.district")}{" "}
                     <strong>{farmer.district}</strong> ({farmer.state})
                   </span>
                 ) : (
-                  "Welcome to the official FarmLink procurement portal. Manage your mandi queues and MSP tokens effortlessly."
+                  t("farmerDashboard.welcomeText")
                 )}
               </p>
             </div>
@@ -147,7 +149,7 @@ const FarmerDashboard = () => {
                 onClick={handleRefresh}
                 disabled={refreshing}
                 className="p-3 rounded-xl bg-white/15 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white transition-all cursor-pointer disabled:opacity-50"
-                title="Refresh Dashboard Data"
+                title={t("farmerDashboard.refreshTitle")}
               >
                 <RefreshCw
                   className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}
@@ -162,7 +164,7 @@ const FarmerDashboard = () => {
                 className="px-5 py-3 rounded-xl bg-white text-emerald-900 hover:bg-green-50 font-bold text-xs shadow-lg shadow-black/10 transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4 text-emerald-700" />
-                <span>Book Queue Token</span>
+                <span>{t("farmerDashboard.bookQueueToken")}</span>
               </button>
             </div>
           </div>
@@ -186,7 +188,7 @@ const FarmerDashboard = () => {
             }`}
           >
             <Calendar className="w-4 h-4" />
-            <span>My Bookings ({bookings.length})</span>
+            <span>{t("farmerDashboard.tabBookings")} ({bookings.length})</span>
           </button>
           <button
             onClick={() => setActiveTab("msp-rates")}
@@ -197,7 +199,7 @@ const FarmerDashboard = () => {
             }`}
           >
             <TrendingUp className="w-4 h-4" />
-            <span>MSP Rates</span>
+            <span>{t("farmerDashboard.tabMspRates")}</span>
           </button>
 
           <button
@@ -209,7 +211,7 @@ const FarmerDashboard = () => {
             }`}
           >
             <Navigation className="w-4 h-4" />
-            <span>Live Token Tracker</span>
+            <span>{t("farmerDashboard.tabLiveToken")}</span>
           </button>
 
           <button
@@ -221,7 +223,7 @@ const FarmerDashboard = () => {
             }`}
           >
             <Search className="w-4 h-4" />
-            <span>Track Booking</span>
+            <span>{t("farmerDashboard.tabTrackBooking")}</span>
           </button>
 
           <button
@@ -233,7 +235,7 @@ const FarmerDashboard = () => {
             }`}
           >
             <Building2 className="w-4 h-4" />
-            <span>Centers</span>
+            <span>{t("farmerDashboard.tabCenters")}</span>
           </button>
         </div>
 

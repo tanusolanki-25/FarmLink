@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import {
   Plus, Pencil, Trash2, Loader2, Building2,
@@ -9,6 +10,7 @@ import CenterModal from "./AddCenter";
 
 /* ── Main Component ────────────────────────────────────────────── */
 function AdminCenters() {
+  const { t } = useLanguage();
   const [centers, setCenters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -50,8 +52,8 @@ function AdminCenters() {
         <div className="flex items-center gap-3 flex-wrap">
           <input
             value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search centers..."
-            className="flex-1 min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+            placeholder={t("adminCenters.searchPlaceholder")}
+            className="w-full sm:flex-1 sm:min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
           />
           <button onClick={fetchCenters} className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 cursor-pointer">
             <RefreshCw className="w-4 h-4" />
@@ -60,7 +62,7 @@ function AdminCenters() {
             onClick={() => setModal("add")}
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-rose-600/20 hover:from-emerald-700 hover:to-green-700 cursor-pointer transition-all"
           >
-            <Plus className="w-4 h-4" /> Add Center
+            <Plus className="w-4 h-4" /> {t("adminCenters.addCenter")}
           </button>
         </div>
 
@@ -72,7 +74,7 @@ function AdminCenters() {
           <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-3">
             <Building2 className="w-12 h-12 text-slate-300 mx-auto" />
             <p className="text-sm font-semibold text-slate-500">
-              {search ? "No centers match your search." : "No centers found. Add one!"}
+              {search ? t("adminCenters.noMatchSearch") : t("adminCenters.noCenters")}
             </p>
           </div>
         ) : (
@@ -112,13 +114,13 @@ function AdminCenters() {
                     onClick={() => setModal(c)}
                     className="flex-1 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                   >
-                    <Pencil className="w-3.5 h-3.5" /> Edit
+                    <Pencil className="w-3.5 h-3.5" /> {t("adminCenters.editCenter")}
                   </button>
                   <button
                     onClick={() => handleDelete(c)}
                     className="flex-1 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 text-green-600 border border-green-200 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
                   >
-                    <Trash2 className="w-3.5 h-3.5" /> Delete
+                    <Trash2 className="w-3.5 h-3.5" /> {t("adminCenters.deleteCenter")}
                   </button>
                 </div>
               </div>

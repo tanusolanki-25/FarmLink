@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import {
   Building2, TrendingUp, Calendar, CheckCircle2,
@@ -50,6 +51,7 @@ function MetricCard({ label, value, icon: Icon, gradient, sub }) {
 
 /* ── Main Component ──────────────────────────────────────────── */
 function AdminReports() {
+  const { t } = useLanguage();
   const [reports, setReports]   = useState([]);
   const [loading, setLoading]   = useState(true);
   const [search, setSearch]     = useState("");
@@ -118,11 +120,11 @@ function AdminReports() {
       {/* ── Summary Cards ── */}
       {!loading && (
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-4">
-          <MetricCard label="Total Bookings"    value={totalAllBookings}  icon={TrendingUp}   gradient="from-emerald-500 to-green-500" />
-          <MetricCard label="Today's Bookings"  value={totalTodayBooked}  icon={Calendar}     gradient="from-amber-500 to-orange-400" />
-          <MetricCard label="Approved"          value={totalApproved}     icon={CheckCircle2} gradient="from-emerald-500 to-teal-500" />
-          <MetricCard label="Completed"         value={totalCompleted}    icon={PackageCheck} gradient="from-indigo-500 to-violet-500" />
-          <MetricCard label="Rejected"          value={totalRejected}     icon={XCircle}      gradient="from-slate-500 to-slate-600" />
+          <MetricCard label={t("adminReports.totalBookings")}    value={totalAllBookings}  icon={TrendingUp}   gradient="from-emerald-500 to-green-500" />
+          <MetricCard label={t("adminReports.todayBookings")}  value={totalTodayBooked}  icon={Calendar}     gradient="from-amber-500 to-orange-400" />
+          <MetricCard label={t("adminReports.approved")}          value={totalApproved}     icon={CheckCircle2} gradient="from-emerald-500 to-teal-500" />
+          <MetricCard label={t("adminReports.completed")}         value={totalCompleted}    icon={PackageCheck} gradient="from-indigo-500 to-violet-500" />
+          <MetricCard label={t("adminReports.rejected")}          value={totalRejected}     icon={XCircle}      gradient="from-slate-500 to-slate-600" />
         </div>
       )}
 
@@ -131,29 +133,29 @@ function AdminReports() {
 
         {/* Header */}
         <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
               <BarChart3 className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-800">Center-wise Booking Report</h3>
+              <h3 className="text-sm font-bold text-slate-800">{t("adminReports.reportTitle")}</h3>
               {lastUpdated && (
                 <p className="text-[11px] text-slate-400">
-                  Updated: {lastUpdated.toLocaleTimeString("en-IN")}
+                  {t("adminReports.updated")} {lastUpdated.toLocaleTimeString("en-IN")}
                 </p>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             {/* Search */}
             <div className="relative">
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search center..."
-                className="pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-slate-50 focus:bg-white focus:border-green-400 outline-none w-44 transition-all"
+                placeholder={t("adminReports.searchPlaceholder")}
+                className="pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-slate-50 focus:bg-white focus:border-green-400 outline-none w-full sm:w-44 transition-all"
               />
             </div>
             {/* Refresh */}
@@ -177,22 +179,22 @@ function AdminReports() {
           <div className="p-16 text-center space-y-3">
             <Building2 className="w-12 h-12 text-slate-300 mx-auto" />
             <p className="text-sm font-semibold text-slate-400">
-              {search ? "No centers match your search." : "No report data available."}
+              {search ? t("adminReports.noMatchSearch") : t("adminReports.noData")}
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[700px] text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
-                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">Center</th>
-                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">Capacity</th>
-                  <SortTh col="todayBooked" label="Today" />
-                  <SortTh col="total"       label="Total" />
-                  <SortTh col="approved"    label="Approved" />
-                  <SortTh col="rejected"    label="Rejected" />
-                  <SortTh col="completed"   label="Completed" />
-                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">Utilisation</th>
+                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("adminReports.colCenter")}</th>
+                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("adminReports.colCapacity")}</th>
+                  <SortTh col="todayBooked" label={t("adminReports.colToday")} />
+                  <SortTh col="total"       label={t("adminReports.colTotal")} />
+                  <SortTh col="approved"    label={t("adminReports.approved")} />
+                  <SortTh col="rejected"    label={t("adminReports.rejected")} />
+                  <SortTh col="completed"   label={t("adminReports.completed")} />
+                  <th className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("adminReports.colUtilisation")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -223,7 +225,7 @@ function AdminReports() {
                       {/* Capacity */}
                       <td className="px-5 py-4">
                         <span className="text-sm font-semibold text-slate-700">{row.capacity ?? "—"}</span>
-                        <p className="text-[11px] text-slate-400">slots</p>
+                        <p className="text-[11px] text-slate-400">{t("adminReports.slotsLabel")}</p>
                       </td>
 
                       {/* Today */}
@@ -274,7 +276,7 @@ function AdminReports() {
               <tfoot>
                 <tr className="bg-slate-50 border-t-2 border-slate-200">
                   <td className="px-5 py-3 text-xs font-bold text-slate-700">
-                    TOTAL ({filtered.length} centers)
+                    {t("adminReports.totalRow")} ({filtered.length} {t("adminReports.centers")})
                   </td>
                   <td className="px-5 py-3" />
                   <td className="px-5 py-3">

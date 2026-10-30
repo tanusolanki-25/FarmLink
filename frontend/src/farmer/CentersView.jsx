@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
 import {
   Building2,
@@ -6,7 +7,6 @@ import {
   Clock,
   Navigation,
   RefreshCw,
-  Loader2,
   CheckCircle2,
   XCircle,
   Layers,
@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 
 /* ── Status badge ─────────────────────────────────────── */
 function StatusPill({ status }) {
+  const { t } = useLanguage();
   const active = status === "active";
   return (
     <span
@@ -35,20 +36,21 @@ function StatusPill({ status }) {
       ) : (
         <XCircle className="w-3 h-3" />
       )}
-      {active ? "Active" : "Inactive"}
+      {active ? t("centersView.active") : t("centersView.inactive")}
     </span>
   );
 }
 
 /* ── Slot bar ─────────────────────────────────────────── */
 function SlotBar({ available, total }) {
+  const { t } = useLanguage();
   const pct = total > 0 ? Math.round((available / total) * 100) : 0;
   const color =
     pct > 50 ? "bg-emerald-500" : pct > 20 ? "bg-amber-400" : "bg-red-500";
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-[11px] text-slate-500">
-        <span>Slots Available</span>
+        <span>{t("centersView.slotsAvailable")}</span>
         <span className="font-semibold text-slate-700">
           {available} / {total}
         </span>
@@ -65,6 +67,7 @@ function SlotBar({ available, total }) {
 
 /* ── Single center card ───────────────────────────────── */
 function CenterCard({ center, isNearby }) {
+  const { t } = useLanguage();
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
       {/* Card top bar */}
@@ -78,7 +81,7 @@ function CenterCard({ center, isNearby }) {
               {center.centerName}
             </h3>
             <p className="text-[11px] text-slate-500">
-              Code: <span className="font-semibold text-slate-700">{center.code}</span>
+              {t("centersView.code")} <span className="font-semibold text-slate-700">{center.code}</span>
             </p>
           </div>
         </div>
@@ -127,7 +130,7 @@ function CenterCard({ center, isNearby }) {
         {center.managerName && (
           <div className="flex items-center gap-2 text-xs text-slate-600">
             <Users className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>Manager: <span className="font-semibold text-slate-700">{center.managerName}</span></span>
+            <span>{t("centersView.manager")} <span className="font-semibold text-slate-700">{center.managerName}</span></span>
           </div>
         )}
 
@@ -165,6 +168,7 @@ export default function CentersView() {
   const [nearbyLoading, setNearbyLoading] = useState(false);
   const [locationError, setLocationError] = useState(null);
   const [locationFetched, setLocationFetched] = useState(false);
+  const { t } = useLanguage();
 
   /* fetch all centers on mount */
   useEffect(() => {
@@ -244,9 +248,9 @@ export default function CentersView() {
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">Procurement Centers</h2>
+          <h2 className="text-lg font-bold text-slate-900">{t("centersView.heading")}</h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Government mandi centers available for slot booking
+            {t("centersView.subheading")}
           </p>
         </div>
 
@@ -257,7 +261,7 @@ export default function CentersView() {
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50 cursor-pointer"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${nearbyLoading ? "animate-spin" : ""}`} />
-            Refresh Location
+            {t("centersView.refreshLocation")}
           </button>
         )}
       </div>
@@ -266,10 +270,10 @@ export default function CentersView() {
       {activeTab === "all" && !allLoading && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Total Centers", value: stats.total,      Icon: Building2,    color: "text-blue-600",    bg: "bg-blue-50 border-blue-100" },
-            { label: "Active Centers", value: stats.active,    Icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100" },
-            { label: "Total Slots",    value: stats.totalSlots, Icon: CalendarClock, color: "text-purple-600", bg: "bg-purple-50 border-purple-100" },
-            { label: "Free Slots",     value: stats.freeSlots,  Icon: Hash,         color: "text-amber-600",   bg: "bg-amber-50 border-amber-100" },
+            { label: t("centersView.totalCenters"), value: stats.total,      Icon: Building2,    color: "text-blue-600",    bg: "bg-blue-50 border-blue-100" },
+            { label: t("centersView.activeCenters"), value: stats.active,    Icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50 border-emerald-100" },
+            { label: t("centersView.totalSlots"),    value: stats.totalSlots, Icon: CalendarClock, color: "text-purple-600", bg: "bg-purple-50 border-purple-100" },
+            { label: t("centersView.freeSlots"),     value: stats.freeSlots,  Icon: Hash,         color: "text-amber-600",   bg: "bg-amber-50 border-amber-100" },
           ].map(({ label, value, Icon, color, bg }) => (
             <div key={label} className={`rounded-2xl border p-4 flex items-center gap-3 ${bg}`}>
               <Icon className={`w-5 h-5 shrink-0 ${color}`} />
@@ -293,7 +297,7 @@ export default function CentersView() {
           }`}
         >
           <Layers className="w-4 h-4" />
-          All Centers ({allCenters.length})
+          {t("centersView.allCenters")} ({allCenters.length})
         </button>
         <button
           onClick={() => setActiveTab("nearby")}
@@ -304,7 +308,7 @@ export default function CentersView() {
           }`}
         >
           <LocateFixed className="w-4 h-4" />
-          Nearby Centers
+          {t("centersView.nearbyCenters")}
           {locationFetched && (
             <span className="ml-1 bg-white/20 px-1.5 py-0.5 rounded-full text-[10px] font-bold">
               {nearbyCenters.length}
@@ -319,12 +323,12 @@ export default function CentersView() {
           {allLoading ? (
             <div className="bg-white rounded-3xl border border-slate-200 p-12 flex flex-col items-center gap-3">
               <div className="w-9 h-9 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs text-slate-500 font-medium">Loading centers...</p>
+              <p className="text-xs text-slate-500 font-medium">{t("centersView.loadingCenters")}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {allCenters.length === 0 ? (
-                <EmptyState message="No procurement centers registered yet." />
+                <EmptyState message={t("centersView.noCenters")} />
               ) : (
                 allCenters.map((c) => (
                   <CenterCard key={c.id} center={c} isNearby={false} />
@@ -335,17 +339,17 @@ export default function CentersView() {
         </>
       )}
 
-      {/* ── Nearby Centers ── */}
+      {/* ── {t("centersView.nearbyCenters")} ── */}
       {activeTab === "nearby" && (
         <>
           {nearbyLoading ? (
             <div className="bg-white rounded-3xl border border-slate-200 p-12 flex flex-col items-center gap-3">
               <LocateFixed className="w-8 h-8 text-green-600 animate-pulse" />
               <p className="text-xs text-slate-500 font-medium">
-                Detecting your location...
+                {t("centersView.detectingLocation")}
               </p>
               <p className="text-[11px] text-slate-400">
-                Please allow location access if prompted
+                {t("centersView.allowLocation")}
               </p>
             </div>
           ) : locationError ? (
@@ -353,19 +357,19 @@ export default function CentersView() {
               <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6 text-red-500" />
               </div>
-              <p className="text-sm font-semibold text-slate-800">Location Error</p>
+              <p className="text-sm font-semibold text-slate-800">{t("centersView.locationError")}</p>
               <p className="text-xs text-slate-500 max-w-xs">{locationError}</p>
               <button
                 onClick={fetchNearbyCenters}
                 className="mt-2 px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-semibold transition-all cursor-pointer"
               >
-                Try Again
+                {t("centersView.tryAgain")}
               </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {nearbyCenters.length === 0 ? (
-                <EmptyState message="No centers found near your location." />
+                <EmptyState message={t("centersView.noNearby")} />
               ) : (
                 nearbyCenters.map((c) => (
                   <CenterCard key={c.id} center={c} isNearby={true} />

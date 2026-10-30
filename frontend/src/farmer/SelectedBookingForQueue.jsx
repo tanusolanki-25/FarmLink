@@ -1,9 +1,11 @@
+import { useLanguage } from "../context/LanguageContext";
 import { CheckCircle2, Navigation, RefreshCw, XCircle } from "lucide-react";
 import api from "../api/axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function SelectedBookingForQueue({ selectedBooking, onClose }) {
+  const { t } = useLanguage();
   const [queueInfo, setQueueInfo] = useState(null);
   const [queueLoading, setQueueLoading] = useState(false);
 
@@ -41,13 +43,13 @@ function SelectedBookingForQueue({ selectedBooking, onClose }) {
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold mb-2">
             <Navigation className="w-3.5 h-3.5" />
-            <span>Live Queue Status</span>
+            <span>{t("selectedBookingQueue.liveQueueStatus")}</span>
           </div>
           <h3 className="text-xl font-bold text-slate-900">
             Token #{selectedBooking?.token || selectedBooking?.id}
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            {selectedBooking?.center?.centerName || "Procurement Center"}
+            {selectedBooking?.center?.centerName || t("selectedBookingQueue.procurementCenter")}
           </p>
         </div>
 
@@ -55,39 +57,39 @@ function SelectedBookingForQueue({ selectedBooking, onClose }) {
           <div className="py-8 flex flex-col items-center justify-center gap-2">
             <RefreshCw className="w-6 h-6 text-green-600 animate-spin" />
             <p className="text-xs text-slate-500">
-              Checking center queue position...
+              {t("selectedBookingQueue.checking")}
             </p>
           </div>
         ) : queueInfo ? (
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
               <span className="text-[10px] text-slate-400 uppercase font-bold">
-                Vehicles Ahead
+                {t("selectedBookingQueue.vehiclesAhead")}
               </span>
               <h4 className="text-2xl font-extrabold text-amber-600 mt-1">
                 {queueInfo.peopleAhead || 0}
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Tractors ahead of you
+                {t("selectedBookingQueue.tractorsAhead")}
               </p>
             </div>
 
             <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
               <span className="text-[10px] text-slate-400 uppercase font-bold">
-                Est. Wait Time
+                {t("selectedBookingQueue.estWaitTime")}
               </span>
               <h4 className="text-2xl font-extrabold text-emerald-600 mt-1">
                 ~{queueInfo.estimatedWaitMinutes || 0} mins
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Fast clearance
+                {t("selectedBookingQueue.fastClearance")}
               </p>
             </div>
 
             <div className="col-span-2 bg-green-50 p-4 rounded-2xl border border-green-200/80 flex items-center justify-between">
               <div>
                 <span className="text-[10px] text-green-700 uppercase font-bold">
-                  Now Serving at Weighbridge
+                  {t("selectedBookingQueue.nowServing")}
                 </span>
                 <h4 className="text-lg font-bold text-green-900 mt-0.5">
                   Token #{queueInfo.currentServing || 0}
@@ -98,7 +100,7 @@ function SelectedBookingForQueue({ selectedBooking, onClose }) {
           </div>
         ) : (
           <p className="text-xs text-slate-500">
-            Queue status information unavailable.
+            {t("selectedBookingQueue.unavailable")}
           </p>
         )}
 

@@ -13,8 +13,10 @@ import {
 import toast from "react-hot-toast";
 import api from "../api/axios";
 import farmerImg from "../assets/farmer.jpg";
+import { useLanguage } from "../context/LanguageContext";
 
 const ResetPassword = () => {
+  const { t } = useLanguage();
   const { token } = useParams();
   const navigate = useNavigate();
 
@@ -96,7 +98,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[520px]">
         {/* LEFT COLUMN: HERO BANNER */}
         <div className="relative hidden lg:flex lg:col-span-5 flex-col justify-between p-8 text-white overflow-hidden bg-emerald-950">
@@ -110,7 +112,7 @@ const ResetPassword = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <KeyRound className="w-4 h-4 text-emerald-300" />
-              <span>Password Security</span>
+              <span>{t("resetPassword.badge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
@@ -149,10 +151,10 @@ const ResetPassword = () => {
               <Lock className="w-6 h-6" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-              Reset Password
+              {t("resetPassword.heading")}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Please enter and confirm your new account password below.
+              {t("resetPassword.subheading")}
             </p>
           </div>
 
@@ -160,7 +162,7 @@ const ResetPassword = () => {
             {/* New Password */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                New Password <span className="text-red-500">*</span>
+                {t("resetPassword.newPasswordLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -196,7 +198,7 @@ const ResetPassword = () => {
             {/* Confirm New Password */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Confirm New Password <span className="text-red-500">*</span>
+                Confirm {t("resetPassword.newPasswordLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -233,7 +235,7 @@ const ResetPassword = () => {
             {formData.newPassword && (
               <div className="space-y-1">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-500">Strength:</span>
+                  <span className="text-slate-500">{t("resetPassword.strengthLabel")}</span>
                   <span className="font-medium text-slate-700">
                     {strengthLabels[strengthScore - 1] || "Very Weak"}
                   </span>
@@ -260,23 +262,23 @@ const ResetPassword = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Updating Password...</span>
+                  <span>{t("resetPassword.updating")}</span>
                 </>
               ) : (
                 <>
-                  <span>Reset & Sign In</span>
+                  <span>{t("resetPassword.resetBtn")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
 
             <p className="text-center text-xs sm:text-sm text-slate-600 pt-2">
-              Remember your password?{" "}
+              {t("resetPassword.rememberPwd")}{" "}
               <Link
                 to="/login"
                 className="text-green-600 hover:text-green-700 font-semibold hover:underline"
               >
-                Sign In
+                {t("resetPassword.signIn")}
               </Link>
             </p>
           </form>

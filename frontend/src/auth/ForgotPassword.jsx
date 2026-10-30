@@ -12,8 +12,10 @@ import {
 import toast from "react-hot-toast";
 import api from "../api/axios";
 import fieldImg from "../assets/field.jpg";
+import { useLanguage } from "../context/LanguageContext";
 
 const ForgotPassword = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -54,7 +56,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
       <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[520px]">
         {/* LEFT COLUMN: HERO IMAGE & BANNER */}
         <div className="relative hidden lg:flex lg:col-span-5 flex-col justify-between p-8 text-white overflow-hidden bg-emerald-950">
@@ -68,7 +70,7 @@ const ForgotPassword = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <KeyRound className="w-4 h-4 text-emerald-300" />
-              <span>Account Recovery</span>
+              <span>{t("forgotPassword.badge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
@@ -108,10 +110,10 @@ const ForgotPassword = () => {
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-                Reset Link Sent!
+                {t("forgotPassword.successTitle")}
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto">
-                We've dispatched a password reset link to{" "}
+                {t("forgotPassword.successDesc")}{" "}
                 <span className="font-semibold text-slate-900">{email}</span>. The link will remain active for 15 minutes.
               </p>
 
@@ -121,13 +123,13 @@ const ForgotPassword = () => {
                   onClick={() => setIsSubmitted(false)}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
                 >
-                  Try another email
+                  {t("forgotPassword.tryAnother")}
                 </button>
                 <Link
                   to="/login"
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-sm font-semibold shadow-md shadow-green-600/20 transition-all text-center"
                 >
-                  Return to Sign In
+                  {t("forgotPassword.returnSignIn")}
                 </Link>
               </div>
             </div>
@@ -138,17 +140,17 @@ const ForgotPassword = () => {
                   <KeyRound className="w-6 h-6" />
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                  Forgot Password?
+                  {t("forgotPassword.heading")}
                 </h1>
                 <p className="text-sm text-slate-500 mt-1">
-                  Enter your account email to receive a password reset link.
+                  {t("forgotPassword.subheading")}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-slate-700 mb-1">
-                    Email Address <span className="text-red-500">*</span>
+                    {t("forgotPassword.emailLabel")} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -180,23 +182,23 @@ const ForgotPassword = () => {
                   {loading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Sending link...</span>
+                      <span>{t("forgotPassword.sending")}</span>
                     </>
                   ) : (
                     <>
-                      <span>Send Reset Link</span>
+                      <span>{t("forgotPassword.sendBtn")}</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}
                 </button>
 
                 <p className="text-center text-xs sm:text-sm text-slate-600 pt-3">
-                  Remembered your password?{" "}
+                  {t("forgotPassword.rememberedPwd")}{" "}
                   <Link
                     to="/login"
                     className="text-green-600 hover:text-green-700 font-semibold hover:underline inline-flex items-center gap-1"
                   >
-                    <span>Sign In</span>
+                    <span>{t("forgotPassword.signIn")}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </p>

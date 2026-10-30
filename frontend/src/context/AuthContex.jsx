@@ -1,64 +1,90 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import api from "../api/axios"
+import api from "../api/axios";
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 async function checkProfileCompleted(role) {
-  if (!role) return false
+  if (!role) return false;
   try {
-    const res = await api.get(`/${role}/profile`)
-    return !!res.data.data 
+    const res = await api.get(`/${role}/profile`);
+    return !!res.data.data;
   } catch {
-    return false
+    return false;
   }
 }
 
-export const AuthProvider = ({children}) =>{
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    api
+      .get("/auth/current-user")
+      .then(async (res) => {
+        const loggedInUser = res.data?.data;
+        if (loggedInUser) {
+          const profileCompleted = await checkProfileCompleted(
+            loggedInUser.role
+          );
+          setUser({ ...loggedInUser, profileCompleted });
+        } else {
+          setUser(null);
+        }
+      })
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
 
-  //  useEffect(() => {
-  //   api.get("/auth/current-user")
-  //     .then(async (res) => {
-  //       const loggedInUser = res.data.data
-  //       if (loggedInUser) {
-  //         const profileCompleted = await checkProfileCompleted(loggedInUser.role)
-  //         setUser({ ...loggedInUser, profileCompleted })
-  //       } else {
-  //         setUser(null)
-  //       }
-  //     })
-  //     .catch(() => setUser(null))
-  //     .finally(() => setLoading(false))
-  // }, [])
-  
   const login = async (email, password) => {
-  const res = await api.post("/auth/login", { email, password })
-  const loggedInUser = res.data.data.user
-  const profileCompleted = await checkProfileCompleted(loggedInUser.role)
-  const fullUser = { ...loggedInUser, profileCompleted }
-  setUser(fullUser)
-  return fullUser 
-}
+    try {
+      const res = await api.post("/auth/login", { email, password });
+      const loggedInUser = res.data.data.user;
+      const profileCompleted = await checkProfileCompleted(loggedInUser.role);
+      const fullUser = { ...loggedInUser, profileCompleted };
+      setUser(fullUser);
+      setLoading(false);
+      return fullUser;
+    } catch (err) {
+      setLoading(false);
+      throw err;
+    }
+  };
 
-  const logout = async()=>{
-    await api.get("/auth/logout")
-    setUser(null)
-  }
+  const logout = async () => {
+    try {
+      await api.get("/auth/logout");
+    } finally {
+      setUser(null);
+      setLoading(false);
+    }
+  };
 
   const markProfileCompleted = () => {
-    setUser((prev) => (prev ? { ...prev, profileCompleted: true } : prev))
-  }
+    setUser((prev) => (prev ? { ...prev, profileCompleted: true } : prev));
+  };
 
   const setRoleLocally = (role) => {
-    setUser((prev) => (prev ? { ...prev, role, profileCompleted: false } : prev))
-  }
+    setUser((prev) =>
+      prev ? { ...prev, role, profileCompleted: false } : prev
+    );
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, loading, markProfileCompleted, checkProfileCompleted, setRoleLocally }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        login,
+        logout,
+        loading,
+        markProfileCompleted,
+        checkProfileCompleted,
+        setRoleLocally,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
-export const useAuth = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext);

@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useEffect, useState } from "react";
 import { Building2, Mail, Phone, MapPin, Clock, Users, Loader2, Badge } from "lucide-react";
 import api from "../api/axios";
@@ -18,6 +19,7 @@ function InfoRow({ icon: Icon, label, value }) {
 }
 
 function OfficerProfile() {
+  const { t } = useLanguage();
   const [officer, setOfficer] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +44,7 @@ function OfficerProfile() {
   if (!officer) {
     return (
       <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center">
-        <p className="text-green-600 text-sm">Failed to load profile.</p>
+        <p className="text-green-600 text-sm">{t("officerProfile.failedToLoad")}</p>
       </div>
     );
   }
@@ -62,7 +64,7 @@ function OfficerProfile() {
               {(officer.name || "O").charAt(0).toUpperCase()}
             </div>
             <div>
-              <p className="text-xs text-indigo-200 uppercase tracking-wider font-semibold">Procurement Officer</p>
+              <p className="text-xs text-indigo-200 uppercase tracking-wider font-semibold">{t("officerProfile.procurementOfficer")}</p>
               <h2 className="text-xl font-extrabold mt-0.5">{officer.name || "—"}</h2>
               <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-white/20 text-[11px] font-semibold text-white border border-white/30">
                 {officer.employeeId || `ID: ${officer.id}`}
@@ -73,10 +75,10 @@ function OfficerProfile() {
 
         {/* Officer Details */}
         <div className="p-5">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Contact Information</p>
-          <InfoRow icon={Mail}  label="Email" value={officer.user?.email} />
-          <InfoRow icon={Phone} label="Phone" value={officer.user?.phone} />
-          <InfoRow icon={Badge} label="Designation" value={officer.designation || "Procurement Officer"} />
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">{t("officerProfile.contactInfo")}</p>
+          <InfoRow icon={Mail}  label={t("officerProfile.email")} value={officer.user?.email} />
+          <InfoRow icon={Phone} label={t("officerProfile.phone")} value={officer.user?.phone} />
+          <InfoRow icon={Badge} label={t("officerProfile.designation")} value={officer.designation || "Procurement Officer"} />
         </div>
       </div>
 
@@ -89,7 +91,7 @@ function OfficerProfile() {
               <Building2 className="w-6 h-6 text-indigo-300" />
             </div>
             <div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Assigned Center</p>
+              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{t("officerProfile.assignedCenter")}</p>
               <h2 className="text-lg font-extrabold mt-0.5">{center?.centerName || "—"}</h2>
               <span className="text-xs text-slate-300">{center?.code || ""}</span>
             </div>
@@ -97,11 +99,11 @@ function OfficerProfile() {
         </div>
 
         <div className="p-5">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Center Details</p>
-          <InfoRow icon={MapPin}  label="Address"  value={center?.address ? `${center.address}, ${center.district}, ${center.state} — ${center.pincode}` : null} />
-          <InfoRow icon={Phone}   label="Contact"  value={center?.contactNumber} />
-          <InfoRow icon={Clock}   label="Timings"  value={center?.openingTime && center?.closingTime ? `${center.openingTime} – ${center.closingTime}` : null} />
-          <InfoRow icon={Users}   label="Slots"    value={center?.totalSlots ? `${center.availableSlots ?? "—"} available / ${center.totalSlots} total` : null} />
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">{t("officerProfile.centerDetails")}</p>
+          <InfoRow icon={MapPin}  label={t("officerProfile.address")}  value={center?.address ? `${center.address}, ${center.district}, ${center.state} — ${center.pincode}` : null} />
+          <InfoRow icon={Phone}   label={t("officerProfile.contact")}  value={center?.contactNumber} />
+          <InfoRow icon={Clock}   label={t("officerProfile.timings")}  value={center?.openingTime && center?.closingTime ? `${center.openingTime} – ${center.closingTime}` : null} />
+          <InfoRow icon={Users}   label={t("officerProfile.slots")}    value={center?.totalSlots ? `${center.availableSlots ?? "—"} ${t("officerProfile.available")} / ${center.totalSlots} ${t("officerProfile.total")}` : null} />
         </div>
 
         {/* Status pill */}

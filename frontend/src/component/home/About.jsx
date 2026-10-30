@@ -15,37 +15,41 @@ const About = () => {
   const features = translations.about.features;
 
   return (
-    <section id="about-section" className="bg-slate-50 py-20">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="about-section" className="bg-slate-50 py-10 sm:py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Heading */}
-        <div className="max-w-3xl mb-14">
-          <span className="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold">
+        <div className="max-w-3xl mb-10 sm:mb-14">
+          <span className="inline-block bg-blue-100 text-blue-700 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold">
             {t("about.badge")}
           </span>
-          <h2 className="text-4xl font-bold mt-5">{t("about.heading")}</h2>
-          <p className="mt-5 text-slate-600 leading-8">{t("about.desc")}</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-4 sm:mt-5 text-slate-900 leading-tight">
+            {t("about.heading")}
+          </h2>
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+            {t("about.desc")}
+          </p>
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {features.map((feature, idx) => {
             const Icon = ICONS[idx];
             return (
               <div
                 key={idx}
-                className="bg-white shadow-lg rounded-2xl p-8 shadow-gray-400 hover:scale-105 cursor-pointer transition duration-600"
+                className="bg-white shadow-md hover:shadow-xl rounded-2xl p-6 sm:p-8 border border-slate-100 transition-all duration-300"
               >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${COLORS[idx]}`}>
-                  <Icon size={28} />
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center ${COLORS[idx]}`}>
+                  <Icon size={26} />
                 </div>
-                <h3 className="text-xl font-bold mt-6">{feature.title[lang]}</h3>
-                <p className="text-slate-600 mt-3">{feature.desc[lang]}</p>
-                <ul className="mt-6 space-y-3">
+                <h3 className="text-lg sm:text-xl font-bold mt-5 text-slate-900">{feature.title[lang]}</h3>
+                <p className="text-slate-600 mt-2 text-xs sm:text-sm leading-relaxed">{feature.desc[lang]}</p>
+                <ul className="mt-5 space-y-2.5">
                   {feature.points.map((point, pi) => (
-                    <li key={pi} className="flex items-center gap-2 text-sm">
-                      <Check size={16} className="text-green-600" />
-                      {point[lang]}
+                    <li key={pi} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
+                      <Check size={15} className="text-green-600 shrink-0" />
+                      <span>{point[lang]}</span>
                     </li>
                   ))}
                 </ul>

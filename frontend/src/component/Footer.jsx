@@ -8,13 +8,13 @@ const Footer = () => {
   const mandiLinks  = translations.footer.mandiLinks;
 
   return (
-    <footer className="bg-slate-950 text-slate-300">
-      <div className="max-w-7xl mx-auto px-4 py-16">
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
 
-        <div className="grid gap-10 lg:grid-cols-5">
+        <div className="grid gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
 
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-2">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-green-600 text-white">
                 <Sprout className="w-4 h-4" />
@@ -24,33 +24,33 @@ const Footer = () => {
               </h2>
             </div>
 
-            <p className="mt-5 leading-7 text-slate-400">
+            <p className="mt-4 sm:mt-5 text-sm sm:text-base leading-relaxed text-slate-400 max-w-sm">
               {t("footer.tagline")}
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <span className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm">
-                <CheckCircle size={16} className="text-green-500" />
-                {t("footer.digitalToken")}
+            <div className="mt-5 sm:mt-6 flex flex-wrap gap-2.5 sm:gap-3">
+              <span className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-300">
+                <CheckCircle size={15} className="text-green-500 shrink-0" />
+                <span>{t("footer.digitalToken")}</span>
               </span>
-              <span className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm">
-                <CheckCircle size={16} className="text-blue-500" />
-                {t("footer.liveQueue")}
+              <span className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-300">
+                <CheckCircle size={15} className="text-blue-500 shrink-0" />
+                <span>{t("footer.liveQueue")}</span>
               </span>
-              <span className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm">
-                <CheckCircle size={16} className="text-green-500" />
-                {t("footer.secureLogin")}
+              <span className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-300">
+                <CheckCircle size={15} className="text-green-500 shrink-0" />
+                <span>{t("footer.secureLogin")}</span>
               </span>
             </div>
           </div>
 
           {/* Farmer Links */}
           <div>
-            <h3 className="font-bold text-white mb-5">{t("footer.farmerPortal")}</h3>
-            <ul className="space-y-3">
+            <h3 className="font-bold text-white mb-4 sm:mb-5 text-sm uppercase tracking-wider">{t("footer.farmerPortal")}</h3>
+            <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
               {farmerLinks.map((item, i) => (
                 <li key={i}>
-                  <a href="#" className="hover:text-green-400 transition">{item[lang]}</a>
+                  <a href="#" className="hover:text-green-400 transition-colors">{item[lang]}</a>
                 </li>
               ))}
             </ul>
@@ -58,25 +58,30 @@ const Footer = () => {
 
           {/* Mandi Links */}
           <div>
-            <h3 className="font-bold text-white mb-5">{t("footer.mandiOps")}</h3>
-            <ul className="space-y-3">
+            <h3 className="font-bold text-white mb-4 sm:mb-5 text-sm uppercase tracking-wider">{t("footer.mandiOps")}</h3>
+            <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
               {mandiLinks.map((item, i) => (
                 <li key={i}>
-                  <a href="#" className="hover:text-green-400 transition">{item[lang]}</a>
+                  <a href="#" className="hover:text-green-400 transition-colors">{item[lang]}</a>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Contact info */}
+          <div>
+            <h3 className="font-bold text-white mb-4 sm:mb-5 text-sm uppercase tracking-wider">{t("footer.helpdesk")}</h3>
+            <div className="space-y-2 text-xs sm:text-sm text-slate-400">
+              <p>Toll Free: 1800-XXX-XXXX</p>
+              <p>support@farmlink.gov.in</p>
+              <p>Mon - Sat (9:00 AM - 6:00 PM)</p>
+            </div>
+          </div>
+
         </div>
 
-        {/* Bottom */}
-        <div className="mt-16 border-t border-slate-800 pt-8 flex flex-col lg:flex-row justify-between gap-5 text-sm text-slate-500">
-          <p>{t("footer.copyright")}</p>
-          <div className="flex flex-wrap gap-6">
-            <a href="#" className="hover:text-green-400">{t("footer.privacy")}</a>
-            <a href="#" className="hover:text-green-400">{t("footer.terms")}</a>
-          </div>
+        <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+          <p>© {new Date().getFullYear()} FarmLink. All rights reserved.</p>
         </div>
 
       </div>

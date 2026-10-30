@@ -12,9 +12,11 @@ import {
 import toast from "react-hot-toast";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContex";
+import { useLanguage } from "../context/LanguageContext";
 import farmerImg from "../assets/farmer.jpg";
 
 const VerifyEmail = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const { setUser } = useAuth();
@@ -176,7 +178,7 @@ const VerifyEmail = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <KeyRound className="w-4 h-4 text-emerald-300" />
-              <span>Two-Step Verification</span>
+              <span>{t("verifyEmail.badge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
@@ -215,10 +217,10 @@ const VerifyEmail = () => {
               <Mail className="w-6 h-6" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-              Verify your email
+              {t("verifyEmail.heading")}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Please enter the 6-digit verification code sent to your email.
+              {t("verifyEmail.subheading")}
             </p>
           </div>
 
@@ -226,7 +228,7 @@ const VerifyEmail = () => {
             {/* Email field (editable if user needs to correct) */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Registered Email
+                {t("verifyEmail.emailLabel")}
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -245,7 +247,7 @@ const VerifyEmail = () => {
             {/* 6 Digit OTP Inputs */}
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">
-                6-Digit Security Code
+                {t("verifyEmail.otpLabel")}
               </label>
               <div className="flex items-center justify-between gap-2 sm:gap-3" onPaste={handlePaste}>
                 {otp.map((digit, idx) => (
@@ -266,10 +268,10 @@ const VerifyEmail = () => {
 
             {/* Resend OTP Section */}
             <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
-              <span>Didn't receive the email?</span>
+              <span>{t("verifyEmail.noEmail")}</span>
               {timer > 0 ? (
                 <span className="font-medium text-slate-400">
-                  Resend code in <strong className="text-green-600">{timer}s</strong>
+                  {t("verifyEmail.resendIn")} <strong className="text-green-600">{timer}s</strong>
                 </span>
               ) : (
                 <button
@@ -283,7 +285,7 @@ const VerifyEmail = () => {
                   ) : (
                     <RefreshCw className="w-3.5 h-3.5" />
                   )}
-                  <span>Resend OTP</span>
+                  <span>{t("verifyEmail.resendOtp")}</span>
                 </button>
               )}
             </div>
@@ -297,11 +299,11 @@ const VerifyEmail = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Verifying Code...</span>
+                  <span>{t("verifyEmail.verifying")}</span>
                 </>
               ) : (
                 <>
-                  <span>Verify Email & Continue</span>
+                  <span>{t("verifyEmail.verifyBtn")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -309,12 +311,12 @@ const VerifyEmail = () => {
 
             {/* Back to Login */}
             <p className="text-center text-xs sm:text-sm text-slate-600 pt-2">
-              Back to{" "}
+              {t("verifyEmail.backToSignIn")}{" "}
               <Link
                 to="/login"
                 className="text-green-600 hover:text-green-700 font-semibold hover:underline"
               >
-                Sign In
+                {t("verifyEmail.signIn")}
               </Link>
             </p>
           </form>

@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import { Users, Mail, Phone, Calendar, Loader2, RefreshCw, ShieldCheck, Sprout, UserCog } from "lucide-react";
 import api from "../api/axios";
@@ -20,6 +21,7 @@ function RoleBadge({ role }) {
 }
 
 function AdminUsers() {
+  const { t } = useLanguage();
   const [users, setUsers]     = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch]   = useState("");
@@ -55,7 +57,7 @@ function AdminUsers() {
   };
 
   const TAB_ICONS = { all: Users, farmer: Sprout, officer: ShieldCheck, admin: UserCog };
-  const TAB_LABELS = { all: "All", farmer: "Farmers", officer: "Officers", admin: "Admins" };
+  const TAB_LABELS = { all: t("adminUsers.allUsers"), farmer: t("adminUsers.farmers"), officer: t("adminUsers.officers"), admin: t("adminUsers.admins") };
 
   return (
     <div className="space-y-3">
@@ -63,8 +65,8 @@ function AdminUsers() {
       <div className="flex items-center gap-3 flex-wrap">
         <input
           value={search} onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by email or phone..."
-          className="flex-1 min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+          placeholder={t("adminUsers.searchPlaceholder")}
+          className="w-full sm:flex-1 sm:min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
         />
         <button onClick={fetchUsers} className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 cursor-pointer">
           <RefreshCw className="w-4 h-4" />
@@ -104,19 +106,19 @@ function AdminUsers() {
       ) : filtered.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center">
           <Users className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <p className="text-sm font-semibold text-slate-500">No users found.</p>
+          <p className="text-sm font-semibold text-slate-500">{t("adminUsers.noUsers")}</p>
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Users</p>
-            <p className="text-xs text-slate-400">{filtered.length} results</p>
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t("adminUsers.usersLabel")}</p>
+            <p className="text-xs text-slate-400">{filtered.length} {t("adminUsers.results")}</p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[550px] text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
-                  {["User", "Email", "Phone", "Role", "Joined"].map((h) => (
+                  {[t("adminUsers.tableUser"), t("adminUsers.tableEmail"), t("adminUsers.tablePhone"), t("adminUsers.tableRole"), t("adminUsers.tableJoined")].map((h) => (
                     <th key={h} className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">{h}</th>
                   ))}
                 </tr>

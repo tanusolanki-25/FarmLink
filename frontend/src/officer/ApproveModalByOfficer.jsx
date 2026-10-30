@@ -1,9 +1,11 @@
+import { useLanguage } from "../context/LanguageContext";
 import toast from "react-hot-toast";
 import api from "../api/axios";
 import { useState } from "react";
 import { Loader2, ThumbsUp } from "lucide-react";
 
 function ApproveModal({ booking, onClose, onSuccess }) {
+  const { t } = useLanguage();
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -24,12 +26,12 @@ function ApproveModal({ booking, onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-6 space-y-5 animate-[fadeIn_.25s_ease]">
+      <div className="w-full max-w-sm bg-white rounded-3xl shadow-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 animate-[fadeIn_.25s_ease] max-h-[90vh] overflow-y-auto">
         <div className="text-center">
           <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3">
             <ThumbsUp className="w-7 h-7" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900">Approve Booking</h3>
+          <h3 className="text-lg font-bold text-slate-900">{t("approveModal.heading")}</h3>
           <p className="text-xs text-slate-500 mt-1">
             Token #{booking.token || booking.id} — {booking.farmer?.name}
           </p>
@@ -37,7 +39,7 @@ function ApproveModal({ booking, onClose, onSuccess }) {
 
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-            Payment Amount (₹)
+            {t("approveModal.paymentAmountLabel")}
           </label>
           <input
             type="number"
@@ -49,7 +51,7 @@ function ApproveModal({ booking, onClose, onSuccess }) {
           />
           {booking.procurement && (
             <p className="text-[11px] text-slate-400 mt-1">
-              Crop: {booking.procurement.crop} · {booking.procurement.quantity} kg · Grade {booking.procurement.quality}
+              {t("approveModal.crop")} {booking.procurement.crop} · {booking.procurement.quantity} kg · {t("approveModal.grade")} {booking.procurement.quality}
             </p>
           )}
         </div>
@@ -64,7 +66,7 @@ function ApproveModal({ booking, onClose, onSuccess }) {
             className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ThumbsUp className="w-4 h-4" />}
-            Approve
+            {t("approveModal.approve")}
           </button>
         </div>
       </div>

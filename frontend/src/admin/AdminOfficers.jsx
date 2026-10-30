@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import {
   Plus, X, Loader2, ShieldCheck, Building2,
@@ -9,6 +10,7 @@ import AddOfficerModal from "./AddOfficer";
 
 /* ── Officer Card ──────────────────────────────────────────────── */
 function OfficerCard({ officer, centers, onReassign }) {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState(officer.center?.id?.toString() || "");
   const [loading, setLoading] = useState(false);
 
@@ -58,14 +60,14 @@ function OfficerCard({ officer, centers, onReassign }) {
 
       {/* Reassign */}
       <div className="space-y-2">
-        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Reassign Center</p>
+        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{t("adminOfficers.reassignCenter")}</p>
         <div className="flex gap-2">
           <select
             value={selected}
             onChange={(e) => setSelected(e.target.value)}
             className="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 bg-slate-50 focus:bg-white focus:border-green-400 outline-none cursor-pointer transition-all"
           >
-            <option value="" disabled>-- Select center --</option>
+            <option value="" disabled>{t("adminOfficers.selectCenter")}</option>
             {centers.map((c) => (
               <option key={c.id} value={c.id}>{c.centerName}</option>
             ))}
@@ -75,7 +77,7 @@ function OfficerCard({ officer, centers, onReassign }) {
             disabled={loading || !selected || Number(selected) === officer.center?.id}
             className="px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 text-white text-xs font-bold cursor-pointer disabled:opacity-40 flex items-center gap-1 transition-all hover:from-emerald-700 hover:to-green-700"
           >
-            {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Save"}
+            {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : t("adminOfficers.save")}
           </button>
         </div>
       </div>
@@ -85,6 +87,7 @@ function OfficerCard({ officer, centers, onReassign }) {
 
 /* ── Main Component ────────────────────────────────────────────── */
 function AdminOfficers() {
+  const { t } = useLanguage();
   const [officers, setOfficers] = useState([]);
   const [centers, setCenters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -126,8 +129,8 @@ function AdminOfficers() {
         <div className="flex items-center gap-3 flex-wrap">
           <input
             value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search officers..."
-            className="flex-1 min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+            placeholder={t("adminOfficers.searchPlaceholder")}
+            className="w-full sm:flex-1 sm:min-w-48 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-800 bg-white focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none transition-all"
           />
           <button onClick={fetchAll} className="p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 cursor-pointer">
             <RefreshCw className="w-4 h-4" />
@@ -136,11 +139,11 @@ function AdminOfficers() {
             onClick={() => setShowAdd(true)}
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 text-white text-xs font-bold flex items-center gap-2 shadow-md shadow-rose-600/20 hover:from-emerald-700 hover:to-green-700 cursor-pointer"
           >
-            <Plus className="w-4 h-4" /> Add Officer
+            <Plus className="w-4 h-4" /> {t("adminOfficers.addOfficer")}
           </button>
         </div>
 
-        <p className="text-xs text-slate-400">{filtered.length} officer{filtered.length !== 1 ? "s" : ""} found</p>
+        <p className="text-xs text-slate-400">{filtered.length} {t("adminOfficers.officersFound")}</p>
 
         {loading ? (
           <div className="flex items-center justify-center py-16">
@@ -150,7 +153,7 @@ function AdminOfficers() {
           <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center space-y-3">
             <ShieldCheck className="w-12 h-12 text-slate-300 mx-auto" />
             <p className="text-sm font-semibold text-slate-500">
-              {search ? "No officers match your search." : "No officers yet. Add one!"}
+              {search ? t("adminOfficers.noMatchSearch") : t("adminOfficers.noOfficers")}
             </p>
           </div>
         ) : (

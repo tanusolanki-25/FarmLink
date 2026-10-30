@@ -13,8 +13,10 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../api/axios";
+import { useLanguage } from "../context/LanguageContext";
 
 const ChangePassword = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -99,7 +101,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 p-4 sm:p-6 lg:p-10">
       <div className="w-full max-w-xl bg-white rounded-3xl shadow-xl shadow-green-950/5 border border-slate-100 overflow-hidden">
         {/* Header Banner */}
         <div className="bg-gradient-to-r from-green-600 to-emerald-700 px-6 sm:px-8 py-7 text-white text-center relative overflow-hidden">
@@ -107,10 +109,10 @@ const ChangePassword = () => {
             <KeyRound className="w-6 h-6 text-green-100" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Change Password
+            {t("changePassword.heading")}
           </h1>
           <p className="mt-1 text-xs sm:text-sm text-green-100 max-w-sm mx-auto">
-            Update your FarmLink account password to keep your portal access safe and secure.
+            {t("changePassword.subheading")}
           </p>
         </div>
 
@@ -119,7 +121,7 @@ const ChangePassword = () => {
           {/* Current Password */}
           <div>
             <label className="block text-xs font-medium text-slate-700 mb-1">
-              Current Password <span className="text-red-500">*</span>
+              {t("changePassword.currentPasswordLabel")} <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -155,7 +157,7 @@ const ChangePassword = () => {
           {/* New Password */}
           <div>
             <label className="block text-xs font-medium text-slate-700 mb-1">
-              New Password <span className="text-red-500">*</span>
+              {t("changePassword.newPasswordLabel")} <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -191,7 +193,7 @@ const ChangePassword = () => {
           {/* Confirm New Password */}
           <div>
             <label className="block text-xs font-medium text-slate-700 mb-1">
-              Confirm New Password <span className="text-red-500">*</span>
+              Confirm {t("changePassword.newPasswordLabel")} <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -228,7 +230,7 @@ const ChangePassword = () => {
           {formData.newPassword && (
             <div className="space-y-1">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-500">Strength:</span>
+                <span className="text-slate-500">{t("changePassword.strengthLabel")}</span>
                 <span className="font-medium text-slate-700">
                   {strengthLabels[strengthScore - 1] || "Very Weak"}
                 </span>
@@ -263,11 +265,11 @@ const ChangePassword = () => {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Updating Password...</span>
+                <span>{t("changePassword.updating")}</span>
               </>
             ) : (
               <>
-                <span>Save New Password</span>
+                <span>{t("changePassword.saveBtn")}</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

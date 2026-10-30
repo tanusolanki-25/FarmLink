@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
 import {
   ShieldCheck, RefreshCw, ClipboardList, User,
@@ -8,6 +9,7 @@ import TodayQueue from "./TodayQueue";
 import OfficerProfile from "./OfficerProfile";
 
 const OfficerDashboard = () => {
+  const { t } = useLanguage();
   const [officer, setOfficer]       = useState(null);
   const [bookings, setBookings]     = useState([]);
   const [loading, setLoading]       = useState(true);
@@ -53,16 +55,16 @@ const OfficerDashboard = () => {
     bookings.filter((b) => b.status?.toLowerCase() === status).length;
 
   const metrics = [
-    { label: "Today's Queue",  value: bookings.length, icon: Users,        from: "from-emerald-600", to: "to-green-500" },
-    { label: "Pending",        value: count("pending"), icon: Clock,        from: "from-amber-500",  to: "to-orange-500" },
-    { label: "Verified",       value: count("verified"), icon: ShieldCheck, from: "from-blue-500",   to: "to-cyan-500" },
-    { label: "Completed",      value: count("completed"), icon: CheckCircle2, from: "from-emerald-500", to: "to-teal-500" },
+    { label: t("officerDashboard.todayQueue"),  value: bookings.length, icon: Users,        from: "from-emerald-600", to: "to-green-500" },
+    { label: t("officerDashboard.pending"),        value: count("pending"), icon: Clock,        from: "from-amber-500",  to: "to-orange-500" },
+    { label: t("officerDashboard.verified"),       value: count("verified"), icon: ShieldCheck, from: "from-blue-500",   to: "to-cyan-500" },
+    { label: t("officerDashboard.completed"),      value: count("completed"), icon: CheckCircle2, from: "from-emerald-500", to: "to-teal-500" },
   ];
 
   /* ── Tab config ─────────────────────────────── */
   const tabs = [
-    { key: "queue",   label: "Today's Queue", icon: ClipboardList },
-    { key: "profile", label: "My Profile",    icon: User },
+    { key: "queue",   label: t("officerDashboard.tabQueue"), icon: ClipboardList },
+    { key: "profile", label: t("officerDashboard.tabProfile"),    icon: User },
   ];
 
   if (loading) {
@@ -72,15 +74,15 @@ const OfficerDashboard = () => {
           <div className="w-12 h-12 rounded-2xl bg-green-400 text-white flex items-center justify-center animate-pulse">
             <ShieldCheck className="w-7 h-7" />
           </div>
-          <p className="text-sm font-semibold text-slate-600">Loading officer dashboard...</p>
+          <p className="text-sm font-semibold text-slate-600">{t("officerDashboard.loading")}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-[calc(100vh-4rem)] bg-slate-50/80 py-2 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-9xl mx-auto space-y-3">
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-5 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-4">
 
         {/* ── Hero Banner ────────────────────────────── */}
         <div className="bg-gradient-to-r from-emerald-800 via-green-700 to-emerald-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-indigo-950/20 relative overflow-hidden">
@@ -93,17 +95,17 @@ const OfficerDashboard = () => {
               {/* Role pill */}
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold text-white mb-3">
                 <ShieldCheck className="w-3.5 h-3.5 text-white" />
-                <span>Officer Dashboard</span>
+                <span>{t("officerDashboard.badge")}</span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Namaste, {officer?.name || "Officer"}! 🏛️
+                {t("officerDashboard.greeting")}, {officer?.name || t("officerDashboard.defaultOfficer")}! 🏛️
               </h1>
               <p className="mt-1 text-sm text-white max-w-xl leading-relaxed">
                 {officer?.center?.centerName
-                  ? <>Assigned Center: <strong>{officer.center.centerName}</strong>
+                  ? <>{t("officerDashboard.assignedCenter")} <strong>{officer.center.centerName}</strong>
                       {officer.center.district ? ` · ${officer.center.district}, ${officer.center.state}` : ""}</>
-                  : "Manage today's farmer procurement queue from your dashboard."}
+                  : t("officerDashboard.manageQueue")}
               </p>
             </div>
 

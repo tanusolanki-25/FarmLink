@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
 import {
   Navigation,
@@ -31,12 +32,13 @@ function StatCard({ label, value, sub, color, bg, border, Icon }) {
 
 /* ── Progress bar ────────────────────────────────────── */
 function QueueProgress({ current, my }) {
+  const { t } = useLanguage();
   if (!my || my <= 0) return null;
   const pct = Math.min(100, Math.max(4, Math.round((current / my) * 100)));
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-[11px] text-slate-500">
-        <span>Queue Progress</span>
+        <span>{t("queueTracker.queueProgress")}</span>
         <span className="font-semibold">
           Serving #{current} → Your token #{my}
         </span>
@@ -53,6 +55,7 @@ function QueueProgress({ current, my }) {
 
 /* ── Main component ──────────────────────────────────── */
 const QueueTracker = () => {
+  const { t } = useLanguage();
   const [tokenInput, setTokenInput]     = useState("");
   const [bookingId, setBookingId]       = useState(null);
   const [queueData, setQueueData]       = useState(null);
@@ -112,10 +115,10 @@ const QueueTracker = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-slate-900">
-            Live Queue Tracker
+            {t("queueTracker.heading")}
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Enter your Booking ID to check real-time queue position at the mandi center
+            {t("queueTracker.subheading")}
           </p>
         </div>
         {queueData && (
@@ -125,13 +128,13 @@ const QueueTracker = () => {
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50 cursor-pointer shrink-0"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
-            {refreshing ? "Refreshing..." : "Refresh"}
+            {refreshing ? t("queueTracker.refreshing") : t("queueTracker.refresh")}
           </button>
         )}
       </div>
 
       {/* Search bar */}
-      <form onSubmit={handleSearch} className="flex gap-3">
+      <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
             <Hash className="w-4 h-4" />
@@ -141,21 +144,21 @@ const QueueTracker = () => {
             min={1}
             value={tokenInput}
             onChange={(e) => setTokenInput(e.target.value)}
-            placeholder="Enter Booking ID  e.g. 12"
+            placeholder={t("queueTracker.placeholder")}
             className="w-full pl-10 pr-4 py-3 rounded-2xl border border-slate-200 bg-white text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all shadow-sm"
           />
         </div>
         <button
           type="submit"
           disabled={loading || !tokenInput}
-          className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm font-semibold shadow-md shadow-green-600/20 transition-all cursor-pointer disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-sm font-semibold shadow-md shadow-green-600/20 transition-all cursor-pointer disabled:cursor-not-allowed"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
             <Navigation className="w-4 h-4" />
           )}
-          <span>{loading ? "Checking..." : "Track Queue"}</span>
+          <span>{loading ? t("queueTracker.checking") : t("queueTracker.trackQueue")}</span>
         </button>
       </form>
 
@@ -163,7 +166,7 @@ const QueueTracker = () => {
       {loading && (
         <div className="bg-white rounded-3xl border border-slate-200 p-12 flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-slate-500 font-medium">Checking live queue position...</p>
+          <p className="text-sm text-slate-500 font-medium">{t("queueTracker.checkingQueue")}</p>
         </div>
       )}
 
@@ -173,10 +176,10 @@ const QueueTracker = () => {
           <div className="w-14 h-14 rounded-full bg-red-50 border border-red-100 flex items-center justify-center">
             <AlertTriangle className="w-7 h-7 text-red-500" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">Queue Data Not Found</h3>
+          <h3 className="text-base font-bold text-slate-900">{t("queueTracker.notFoundTitle")}</h3>
           <p className="text-xs text-slate-500 max-w-xs">
-            No queue entry found for Booking ID <strong>#{tokenInput}</strong>.
-            Make sure the booking exists and is active.
+            {t("queueTracker.notFoundDesc")} <strong>#{tokenInput}</strong>.
+            {t("queueTracker.notFoundDesc2")}
           </p>
         </div>
       )}
@@ -189,9 +192,9 @@ const QueueTracker = () => {
             <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-4">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
               <div>
-                <p className="text-sm font-bold text-emerald-800">Your turn has come!</p>
+                <p className="text-sm font-bold text-emerald-800">{t("queueTracker.yourTurn")}</p>
                 <p className="text-xs text-emerald-600">
-                  Proceed to the weighbridge with your token #{queueData.myToken}.
+                  {t("queueTracker.proceedWeighbridge")} #{queueData.myToken}.
                 </p>
               </div>
             </div>
@@ -211,40 +214,40 @@ const QueueTracker = () => {
           {/* Stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <StatCard
-              label="My Token"
+              label={t("queueTracker.myToken")}
               value={`#${queueData.myToken}`}
-              sub="Assigned to you"
+              sub={t("queueTracker.assignedToYou")}
               color="text-green-700"
               bg="bg-green-50"
               border="border-green-200"
               Icon={Ticket}
             />
             <StatCard
-              label="Now Serving"
+              label={t("queueTracker.nowServing")}
               value={`#${queueData.currentServing ?? 0}`}
-              sub="At weighbridge"
+              sub={t("queueTracker.atWeighbridge")}
               color="text-blue-700"
               bg="bg-blue-50"
               border="border-blue-200"
               Icon={CheckCircle2}
             />
             <StatCard
-              label="Ahead of You"
+              label={t("queueTracker.aheadOfYou")}
               value={queueData.peopleAhead > 0 ? queueData.peopleAhead : "—"}
-              sub={queueData.peopleAhead > 0 ? "Vehicles ahead" : "Your turn now!"}
+              sub={queueData.peopleAhead > 0 ? t("queueTracker.vehiclesAhead") : t("queueTracker.yourTurnNow")}
               color={queueData.peopleAhead > 0 ? "text-amber-700" : "text-emerald-700"}
               bg={queueData.peopleAhead > 0 ? "bg-amber-50" : "bg-emerald-50"}
               border={queueData.peopleAhead > 0 ? "border-amber-200" : "border-emerald-200"}
               Icon={Users}
             />
             <StatCard
-              label="Est. Wait"
+              label={t("queueTracker.estWait")}
               value={
                 queueData.estimatedWaitMinutes > 0
                   ? `~${queueData.estimatedWaitMinutes} min`
                   : "—"
               }
-              sub={queueData.estimatedWaitMinutes > 0 ? "Approx wait time" : "Ready to proceed"}
+              sub={queueData.estimatedWaitMinutes > 0 ? t("queueTracker.approxWait") : t("queueTracker.readyToProceed")}
               color={queueData.estimatedWaitMinutes > 0 ? "text-purple-700" : "text-emerald-700"}
               bg={queueData.estimatedWaitMinutes > 0 ? "bg-purple-50" : "bg-emerald-50"}
               border={queueData.estimatedWaitMinutes > 0 ? "border-purple-200" : "border-emerald-200"}
@@ -262,7 +265,7 @@ const QueueTracker = () => {
 
           {/* Auto-refresh notice */}
           <p className="text-center text-[11px] text-slate-400">
-            Queue position auto-refreshes every 30 seconds.
+            {t("queueTracker.autoRefresh")}
           </p>
         </div>
       )}
@@ -273,12 +276,12 @@ const QueueTracker = () => {
           <div className="w-14 h-14 rounded-full bg-green-50 border border-green-100 flex items-center justify-center">
             <Navigation className="w-7 h-7 text-green-600" />
           </div>
-          <h3 className="text-base font-bold text-slate-900">Track Your Queue Position</h3>
+          <h3 className="text-base font-bold text-slate-900">{t("queueTracker.initialTitle")}</h3>
           <p className="text-xs text-slate-500 max-w-xs">
             Enter your Booking ID above to see your live queue position, vehicles ahead, and estimated wait time.
           </p>
           <p className="text-[11px] text-slate-400 mt-1">
-            💡 Copy your Booking ID from the <strong>My Bookings</strong> tab
+            💡 {t("queueTracker.copyHint")} <strong>{t("queueTracker.myBookingsTab")}</strong> tab
           </p>
         </div>
       )}

@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { Clock, TrendingUp, Minus, ArrowUpRight, Info } from "lucide-react";
 
 const crops = [
@@ -82,6 +83,7 @@ const crops = [
 ];
 
 const MspRates = () => {
+  const { t } = useLanguage();
   const now = new Date().toLocaleTimeString("en-IN", {
     hour: "2-digit",
     minute: "2-digit",
@@ -93,15 +95,15 @@ const MspRates = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-lg font-bold text-slate-900">
-            Today's MSP Rates
+            {t("mspRates.heading")}
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Official Government Minimum Support Prices — Kharif & Rabi 2025-26
+            {t("mspRates.subheading")}
           </p>
         </div>
         <div className="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 shrink-0">
           <Clock className="w-3.5 h-3.5 text-green-600" />
-          Synced Today · {now}
+          {t("mspRates.syncedToday")} · {now}
         </div>
       </div>
 

@@ -12,10 +12,12 @@ import {
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContex";
+import { useLanguage } from "../context/LanguageContext";
 import toast from "react-hot-toast";
 import api from "../api/axios";
 
 export default function SideBar({ showSettingsDrawer, setShowSettingsDrawer }) {
+  const { lang, setLang } = useLanguage();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +26,6 @@ export default function SideBar({ showSettingsDrawer, setShowSettingsDrawer }) {
 
   const [smsNotifications, setSmsNotifications] = useState(true);
   const [priceAlerts, setPriceAlerts] = useState(true);
-  const [language, setLanguage] = useState("hi");
 
   const fetchData = async () => {
     try {
@@ -64,7 +65,7 @@ export default function SideBar({ showSettingsDrawer, setShowSettingsDrawer }) {
             className="fixed inset-0 "
             onClick={() => setShowSettingsDrawer(false)}
           />
-          <div className="fixed top-18 right-4 sm:right-14 bg-white rounded-xl shadow-2xl shadow-slate-900/20 flex flex-col z-10 max-h-[calc(100vh-5.5rem)] border border-slate-200 overflow-hidden">
+          <div className="fixed top-18 right-4 sm:right-14 w-[calc(100vw-2rem)] sm:w-96 left-4 sm:left-auto max-w-sm bg-white rounded-xl shadow-2xl shadow-slate-900/20 flex flex-col z-10 max-h-[calc(100vh-5.5rem)] border border-slate-200 overflow-hidden">
             {/* Popover Header */}
             <div className="bg-gradient-to-r from-emerald-800 via-green-700 to-emerald-900 p-5 text-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
@@ -192,9 +193,9 @@ export default function SideBar({ showSettingsDrawer, setShowSettingsDrawer }) {
                     <span>Portal Language (भाषा)</span>
                   </div>
                   <select
-                    value={language}
+                    value={lang}
                     onChange={(e) => {
-                      setLanguage(e.target.value);
+                      setLang(e.target.value);
                       toast.success(
                         `Language set to ${e.target.value === "hi" ? "हिंदी" : "English"}`
                       );

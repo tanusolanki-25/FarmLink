@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useEffect, useState } from "react";
 import {
   Building2, Users, ShieldCheck, Calendar, TrendingUp,
@@ -7,12 +8,12 @@ import api from "../api/axios";
 
 function StatCard({ icon: Icon, label, value, gradient, sub }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-all">
-      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white shrink-0 shadow-md`}>
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 hover:shadow-md transition-all">
+      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center text-white shrink-0 shadow-md`}>
         <Icon className="w-5 h-5" />
       </div>
       <div className="min-w-0">
-        <p className="text-2xl font-extrabold text-slate-900 leading-none">{value ?? "—"}</p>
+        <p className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-none">{value ?? "—"}</p>
         <p className="text-xs text-slate-500 font-medium mt-0.5">{label}</p>
         {sub && <p className="text-[11px] text-slate-400 mt-0.5">{sub}</p>}
       </div>
@@ -36,6 +37,7 @@ function StatusPill({ status, count }) {
 }
 
 function AdminOverview({ stats, statsLoading }) {
+  const { t } = useLanguage();
   const [centers, setCenters] = useState([]);
   const [centersLoading, setCentersLoading] = useState(true);
 
@@ -51,12 +53,12 @@ function AdminOverview({ stats, statsLoading }) {
   }, []);
 
   const metricCards = [
-    { icon: Users,        label: "Total Farmers",     value: stats?.farmers,       gradient: "from-green-500 to-emerald-800" },
-    { icon: ShieldCheck,  label: "Total Officers",     value: stats?.officers,      gradient: "from-emerald-500 to-teal-500" },
-    { icon: Building2,    label: "Procurement Centers",value: stats?.centers,       gradient: "from-blue-500 to-cyan-500" },
-    { icon: Calendar,     label: "Today's Bookings",   value: stats?.todayBookings, gradient: "from-amber-500 to-orange-500" },
-    { icon: TrendingUp,   label: "Total Bookings",     value: stats?.totalBookings, gradient: "from-teal-500 to-emerald-500" },
-    { icon: IndianRupee,  label: "Total Paid Out",     value: stats?.paidAmount != null ? `₹${Number(stats.paidAmount).toLocaleString("en-IN")}` : "₹0",
+    { icon: Users,        label: t("adminOverview.totalFarmers"),     value: stats?.farmers,       gradient: "from-green-500 to-emerald-800" },
+    { icon: ShieldCheck,  label: t("adminOverview.totalOfficers"),     value: stats?.officers,      gradient: "from-emerald-500 to-teal-500" },
+    { icon: Building2,    label: t("adminOverview.procurementCenters"),value: stats?.centers,       gradient: "from-blue-500 to-cyan-500" },
+    { icon: Calendar,     label: t("adminOverview.todayBookings"),   value: stats?.todayBookings, gradient: "from-amber-500 to-orange-500" },
+    { icon: TrendingUp,   label: t("adminOverview.totalBookings"),     value: stats?.totalBookings, gradient: "from-teal-500 to-emerald-500" },
+    { icon: IndianRupee,  label: t("adminOverview.totalPaidOut"),     value: stats?.paidAmount != null ? `₹${Number(stats.paidAmount).toLocaleString("en-IN")}` : "₹0",
       gradient: "from-green-500 to-emerald-800" },
   ];
 
@@ -81,7 +83,7 @@ function AdminOverview({ stats, statsLoading }) {
       {/* Booking Status Breakdown */}
       {!statsLoading && Object.keys(byStatus).length > 0 && (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-          <h3 className="text-sm font-bold text-slate-700 mb-4">Booking Status Breakdown</h3>
+          <h3 className="text-sm font-bold text-slate-700 mb-4">{t("adminOverview.bookingStatusBreakdown")}</h3>
           <div className="flex flex-wrap gap-3">
             {Object.entries(byStatus).map(([status, count]) => (
               <div key={status} className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2">
@@ -96,8 +98,8 @@ function AdminOverview({ stats, statsLoading }) {
       {/* Center-wise Table */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-700">Procurement Centers Overview</h3>
-          <span className="text-xs text-slate-400">{centers.length} centers</span>
+          <h3 className="text-sm font-bold text-slate-700">{t("adminOverview.procurementCentersOverview")}</h3>
+          <span className="text-xs text-slate-400">{centers.length} {t("adminOverview.centers")}</span>
         </div>
 
         {centersLoading ? (
@@ -105,13 +107,13 @@ function AdminOverview({ stats, statsLoading }) {
             <Loader2 className="w-6 h-6 animate-spin text-green-500" />
           </div>
         ) : centers.length === 0 ? (
-          <div className="p-10 text-center text-sm text-slate-400">No centers found.</div>
+          <div className="p-10 text-center text-sm text-slate-400">{t("adminOverview.noCenters")}</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[600px] text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
-                  {["Center Name", "District", "State", "Total Slots", "Available", "Status"].map((h) => (
+                  {[t("adminOverview.centerName"), t("adminOverview.district"), t("adminOverview.state"), t("adminOverview.totalSlots"), t("adminOverview.available"), t("adminOverview.status")].map((h) => (
                     <th key={h} className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">{h}</th>
                   ))}
                 </tr>

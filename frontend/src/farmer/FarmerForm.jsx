@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -40,6 +41,7 @@ const INDIAN_STATES = [
 ];
 
 const FarmerForm = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { markProfileCompleted } = useAuth();
 
@@ -202,7 +204,7 @@ const FarmerForm = () => {
   // }
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-green-50/60 via-slate-50 to-emerald-100/30 py-6 sm:py-10 px-3 sm:px-6 lg:px-8">
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-green-950/10 border border-slate-100 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
         {/* LEFT COLUMN: HERO IMAGE & HIGHLIGHTS */}
         <div className="relative hidden lg:flex lg:col-span-5 flex-col justify-between p-8 text-white overflow-hidden bg-emerald-950">
@@ -218,15 +220,15 @@ const FarmerForm = () => {
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wide text-green-100">
               <Sprout className="w-4 h-4 text-emerald-300" />
-              <span>Kisan KYC & Profile</span>
+              <span>{t("farmerForm.badge")}</span>
             </div>
 
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white leading-tight">
-              {isUpdateMode ? "Update Your" : "Complete Your"} <br />
-              <span className="text-emerald-300">Farmer Profile.</span>
+              {isUpdateMode ? t("farmerForm.updateHeading") : t("farmerForm.completeHeading")} <br />
+              <span className="text-emerald-300">{t("farmerForm.farmerProfile")}</span>
             </h2>
             <p className="mt-2 text-sm text-green-100/90 leading-relaxed">
-              Verify your farm details to access official MSP grain procurement, digital queue tokens, and direct bank payouts.
+              {t("farmerForm.subheading")}
             </p>
           </div>
 
@@ -237,8 +239,8 @@ const FarmerForm = () => {
                 <Landmark className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Direct Benefit Transfer (DBT)</h4>
-                <p className="text-[11px] text-green-100/80">MSP amounts credited directly into bank account</p>
+                <h4 className="text-xs font-semibold text-white">{t("farmerForm.dbtTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("farmerForm.dbtDesc")}</p>
               </div>
             </div>
 
@@ -247,8 +249,8 @@ const FarmerForm = () => {
                 <Clock className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Priority Queue Booking</h4>
-                <p className="text-[11px] text-green-100/80">Book center time slots and skip long tractor lines</p>
+                <h4 className="text-xs font-semibold text-white">{t("farmerForm.priorityQueueTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("farmerForm.priorityQueueDesc")}</p>
               </div>
             </div>
 
@@ -257,18 +259,18 @@ const FarmerForm = () => {
                 <Award className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-white">Government Certified</h4>
-                <p className="text-[11px] text-green-100/80">Authorized mandi procurement receipts</p>
+                <h4 className="text-xs font-semibold text-white">{t("farmerForm.govtCertTitle")}</h4>
+                <p className="text-[11px] text-green-100/80">{t("farmerForm.govtCertDesc")}</p>
               </div>
             </div>
           </div>
 
           {/* Bottom Trust Badge */}
           <div className="relative z-10 pt-4 border-t border-white/15 flex items-center justify-between text-xs text-green-100/80">
-            <span>UIDAI & Land Record Compliance</span>
+            <span>{t("farmerForm.uidaiCompliance")}</span>
             <div className="flex items-center gap-1 font-semibold text-emerald-300">
               <ShieldCheck className="w-4 h-4" />
-              <span>Verified Kisan</span>
+              <span>{t("farmerForm.verifiedKisan")}</span>
             </div>
           </div>
         </div>
@@ -277,10 +279,10 @@ const FarmerForm = () => {
         <div className="lg:col-span-7 p-4 sm:p-8 flex flex-col justify-center">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-              {isUpdateMode ? "Farmer Profile Details" : "Register Farmer Profile"}
+              {isUpdateMode ? t("farmerForm.formHeadingUpdate") : t("farmerForm.formHeadingComplete")}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
-              Please enter your personal and village details as recorded in land revenue documents.
+              {t("farmerForm.formSubheading")}
             </p>
           </div>
 
@@ -289,7 +291,7 @@ const FarmerForm = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Full Name (पूरा नाम) <span className="text-red-500">*</span>
+                  {t("farmerForm.fullNameLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -315,7 +317,7 @@ const FarmerForm = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Father / Husband Name (पिता का नाम)
+                  {t("farmerForm.fatherNameLabel")}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -336,8 +338,8 @@ const FarmerForm = () => {
             {/* Aadhaar Number */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Aadhaar Number (आधार कार्ड संख्या){" "}
-                <span className="text-xs text-slate-400 font-normal">(Optional, for fast verification)</span>
+                {t("farmerForm.aadhaarLabel")}{" "}
+                <span className="text-xs text-slate-400 font-normal">{t("farmerForm.aadhaarOptional")}</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -366,7 +368,7 @@ const FarmerForm = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  Village / Gram Panchayat (गांव) <span className="text-red-500">*</span>
+                  {t("farmerForm.villageLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -392,7 +394,7 @@ const FarmerForm = () => {
 
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">
-                  District (जिला) <span className="text-red-500">*</span>
+                  {t("farmerForm.districtLabel")} <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -420,7 +422,7 @@ const FarmerForm = () => {
             {/* State Selection */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                State (राज्य) <span className="text-red-500">*</span>
+                {t("farmerForm.stateLabel")} <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -444,7 +446,7 @@ const FarmerForm = () => {
             {/* Full Street / Farm Address */}
             <div>
               <label className="block text-xs font-medium text-slate-700 mb-1">
-                Complete Residential Address (स्थाई पता) <span className="text-red-500">*</span>
+                {t("farmerForm.addressLabel")} <span className="text-red-500">*</span>
               </label>
               <textarea
                 name="address"
@@ -493,11 +495,11 @@ const FarmerForm = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Saving Profile...</span>
+                  <span>{t("farmerForm.savingProfile")}</span>
                 </>
               ) : (
                 <>
-                  <span>{isUpdateMode ? "Update Farmer Profile" : "Save & Complete Profile"}</span>
+                  <span>{isUpdateMode ? t("farmerForm.updateBtn") : t("farmerForm.saveBtn")}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}

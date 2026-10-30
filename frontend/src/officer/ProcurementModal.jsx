@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState } from "react";
 import { X, Wheat, Weight, Star, Loader2 } from "lucide-react";
 import api from "../api/axios";
@@ -15,6 +16,7 @@ const QUALITY_OPTIONS = [
 ];
 
 function ProcurementModal({ booking, onClose, onSuccess }) {
+  const { t } = useLanguage();
   const [crop, setCrop] = useState(booking?.procurement?.crop || "");
   const [quantity, setQuantity] = useState(booking?.procurement?.quantity || "");
   const [quality, setQuality] = useState(booking?.procurement?.quality || "");
@@ -45,14 +47,14 @@ function ProcurementModal({ booking, onClose, onSuccess }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-[fadeIn_.25s_ease]">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden animate-[fadeIn_.25s_ease] max-h-[90vh] flex flex-col">
 
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-6 text-white relative">
+        <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-4 sm:p-6 text-white relative shrink-0">
           <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-start justify-between relative z-10">
             <div>
-              <p className="text-xs font-semibold text-indigo-200 uppercase tracking-wider">Record Procurement</p>
+              <p className="text-xs font-semibold text-indigo-200 uppercase tracking-wider">{t("procurementModal.heading")}</p>
               <h2 className="text-xl font-extrabold mt-0.5">Token #{booking.token || booking.id}</h2>
               <p className="text-sm text-indigo-100 mt-0.5">
                 {booking.farmer?.name || "Farmer"}
@@ -68,19 +70,19 @@ function ProcurementModal({ booking, onClose, onSuccess }) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1">
 
           {/* Crop */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-              <span className="inline-flex items-center gap-1.5"><Wheat className="w-3.5 h-3.5 text-green-500" /> Crop Type</span>
+              <span className="inline-flex items-center gap-1.5"><Wheat className="w-3.5 h-3.5 text-green-500" /> {t("procurementModal.cropTypeLabel")}</span>
             </label>
             <select
               value={crop}
               onChange={(e) => setCrop(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-900 bg-slate-50 focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all cursor-pointer"
             >
-              <option value="" disabled>-- Select crop --</option>
+              <option value="" disabled>{t("procurementModal.selectCrop")}</option>
               {CROPS.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
@@ -90,7 +92,7 @@ function ProcurementModal({ booking, onClose, onSuccess }) {
           {/* Quantity */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
-              <span className="inline-flex items-center gap-1.5"><Weight className="w-3.5 h-3.5 text-green-500" /> Quantity (kg)</span>
+              <span className="inline-flex items-center gap-1.5"><Weight className="w-3.5 h-3.5 text-green-500" /> {t("procurementModal.quantityLabel")}</span>
             </label>
             <input
               type="number"
@@ -105,7 +107,7 @@ function ProcurementModal({ booking, onClose, onSuccess }) {
           {/* Quality */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-              <span className="inline-flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-green-500" /> Quality Grade</span>
+              <span className="inline-flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-green-500" /> {t("procurementModal.qualityLabel")}</span>
             </label>
             <div className="grid grid-cols-3 gap-2">
               {QUALITY_OPTIONS.map((q) => (
@@ -146,7 +148,7 @@ function ProcurementModal({ booking, onClose, onSuccess }) {
               className="flex-1 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-              Save Details
+              {t("procurementModal.saveDetails")}
             </button>
           </div>
         </form>

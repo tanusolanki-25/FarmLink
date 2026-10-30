@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../api/axios";
@@ -10,6 +11,7 @@ const EMPTY_FORM = {
 };
 
 function CenterModal({ editing, onClose, onSuccess, centers }) {
+  const { t } = useLanguage();
   const [form, setForm] = useState(editing
     ? {
         centerName:    editing.centerName    || "",
@@ -76,10 +78,10 @@ function CenterModal({ editing, onClose, onSuccess, centers }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 py-6">
       <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden animate-[fadeIn_.25s_ease] flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-6 text-white flex items-center justify-between shrink-0">
+        <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 p-4 sm:p-6 text-white flex items-center justify-between shrink-0">
           <div>
-            <p className="text-xs font-semibold text uppercase tracking-wider">{editing ? "Edit Center" : "New Center"}</p>
-            <h2 className="text-xl font-extrabold mt-0.5">{editing ? editing.centerName : "Add Procurement Center"}</h2>
+            <p className="text-xs font-semibold text uppercase tracking-wider">{editing ? t("addCenterModal.editBadge") : t("addCenterModal.newBadge")}</p>
+            <h2 className="text-xl font-extrabold mt-0.5">{editing ? editing.centerName : t("addCenterModal.addHeading")}</h2>
           </div>
           <button onClick={onClose} className="w-9 h-9 rounded-xl bg-white/20 hover:bg-white/30 flex items-center justify-center cursor-pointer transition-colors">
             <X className="w-4 h-4" />
@@ -87,22 +89,22 @@ function CenterModal({ editing, onClose, onSuccess, centers }) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-4 flex-1">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Center Name *" k="centerName" placeholder="e.g. Indore Mandi" />
-            <Field label="Code (Unique) *" k="code" placeholder="e.g. IND001" />
-            <Field label="State *" k="state" placeholder="e.g. Madhya Pradesh" />
-            <Field label="District *" k="district" placeholder="e.g. Indore" />
-            <Field label="Address" k="address" placeholder="Full address" />
-            <Field label="Pincode" k="pincode" placeholder="e.g. 452001" />
-            <Field label="Contact Number" k="contactNumber" type="tel" placeholder="e.g. 0731-XXXXXXX" />
-            <Field label="Manager Name" k="managerName" placeholder="In-charge officer" />
-            <Field label="Opening Time" k="openingTime" type="time" />
-            <Field label="Closing Time" k="closingTime" type="time" />
-            <Field label="Total Slots" k="totalSlots" type="number" placeholder="e.g. 50" />
+            <Field label={t("addCenterModal.centerName")} k="centerName" placeholder="e.g. Indore Mandi" />
+            <Field label={t("addCenterModal.code")} k="code" placeholder="e.g. IND001" />
+            <Field label={t("addCenterModal.state")} k="state" placeholder="e.g. Madhya Pradesh" />
+            <Field label={t("addCenterModal.district")} k="district" placeholder="e.g. Indore" />
+            <Field label={t("addCenterModal.address")} k="address" placeholder="Full address" />
+            <Field label={t("addCenterModal.pincode")} k="pincode" placeholder="e.g. 452001" />
+            <Field label={t("addCenterModal.contactNumber")} k="contactNumber" type="tel" placeholder="e.g. 0731-XXXXXXX" />
+            <Field label={t("addCenterModal.managerName")} k="managerName" placeholder="In-charge officer" />
+            <Field label={t("addCenterModal.openingTime")} k="openingTime" type="time" />
+            <Field label={t("addCenterModal.closingTime")} k="closingTime" type="time" />
+            <Field label={t("addCenterModal.totalSlots")} k="totalSlots" type="number" placeholder="e.g. 50" />
             <div /> {/* spacer */}
-            <Field label="Latitude" k="latitude" type="number" placeholder="e.g. 22.7196" />
-            <Field label="Longitude" k="longitude" type="number" placeholder="e.g. 75.8577" />
+            <Field label={t("addCenterModal.latitude")} k="latitude" type="number" placeholder="e.g. 22.7196" />
+            <Field label={t("addCenterModal.longitude")} k="longitude" type="number" placeholder="e.g. 75.8577" />
           </div>
 
           <div className="flex gap-3 pt-2">
@@ -112,7 +114,7 @@ function CenterModal({ editing, onClose, onSuccess, centers }) {
             <button type="submit" disabled={loading}
               className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 to-emerald-700 text-white text-sm font-semibold shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60">
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-              {editing ? "Save Changes" : "Create Center"}
+              {editing ? t("addCenterModal.saveChanges") : t("addCenterModal.createCenter")}
             </button>
           </div>
         </form>

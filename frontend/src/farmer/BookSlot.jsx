@@ -71,8 +71,8 @@ function BookSlot({ showBookSlot, setShowBookSlot }) {
   return (
     <>
       {showBookSlot && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm px-4 pt-20 pb-6 overflow-y-auto">
-          <div className="p-4 sm:p-6 w-full max-w-lg rounded-3xl bg-white shadow-2xl animate-[fadeIn_.3s_ease] shadow-sm mx-auto space-y-4">
+        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 backdrop-blur-sm px-3 sm:px-4 pt-16 sm:pt-20 pb-6 overflow-y-auto">
+          <div className="p-4 sm:p-6 w-full max-w-lg rounded-2xl sm:rounded-3xl bg-white shadow-2xl animate-[fadeIn_.3s_ease] shadow-sm mx-auto space-y-4">
 
             {/* Header */}
             <div className="flex items-start justify-between gap-2">
@@ -175,13 +175,13 @@ function BookSlot({ showBookSlot, setShowBookSlot }) {
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
                   {t("bookSlot.timeSlot")} <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
                   {timeSlots.map((slot) => (
                     <button
                       key={slot}
                       type="button"
                       onClick={() => setBookingTime(slot)}
-                      className={`p-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer text-center ${
+                      className={`p-2.5 sm:p-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer text-center ${
                         bookingTime === slot
                           ? "border-green-600 bg-green-50 text-green-700 shadow-sm"
                           : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"

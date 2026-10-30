@@ -1,12 +1,13 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import { Building, Calendar, CheckCircle2, Clock, Copy, Check, MapPin, Navigation, Plus, ShieldCheck, Trash2, XCircle } from "lucide-react";
+import { Calendar, CheckCircle2, Clock, Copy, Check, Navigation, Plus, ShieldCheck, Trash2, XCircle } from "lucide-react";
 import BookSlot from "./BookSlot";
 import SelectedBookingForQueue from "./SelectedBookingForQueue";
 
-/* Small helper: shows Booking ID + copy-to-clipboard button */
 function CopyBookingId({ id }) {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -22,7 +23,7 @@ function CopyBookingId({ id }) {
       className="mt-1 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer group"
     >
       <span className="text-[11px] font-semibold text-slate-500">
-        Booking ID: <span className="text-slate-700">#{id}</span>
+        {t("myBooking.bookingId")} <span className="text-slate-700">#{id}</span>
       </span>
       {copied ? (
         <Check className="w-3 h-3 text-green-600" />
@@ -38,6 +39,7 @@ function MyBooking() {
  const [bookings, setBookings] = useState([]);
  const [loading, setLoading] = useState(true);
  const [selectedBooking, setSelectedBooking] = useState(null);
+ const { t } = useLanguage();
 
  const fetchData = async () => {
   try {
@@ -106,21 +108,21 @@ function MyBooking() {
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">
             <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
-            <span>Verified</span>
+            <span>{t("myBooking.verified")}</span>
           </span>
         );
       case "rejected":
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
             <XCircle className="w-3.5 h-3.5 text-red-600" />
-            <span>Cancelled</span>
+            <span>{t("myBooking.cancelled")}</span>
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
             <Clock className="w-3.5 h-3.5 text-amber-600" />
-            <span>Pending Queue</span>
+            <span>{t("myBooking.pendingQueue")}</span>
           </span>
         );
     }
@@ -130,13 +132,13 @@ function MyBooking() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold text-slate-900">
-          Your Procurement Slots & Queue Tokens
+          {t("myBooking.heading")}
         </h2>
         <button
           onClick={() => setShowBookSlot(true)}
           className="text-xs font-semibold text-green-600 hover:text-green-700 hover:underline flex items-center gap-1 cursor-pointer"
         >
-          <span>+ Book New Slot</span>
+          <span>{t("myBooking.bookNewSlot")}</span>
         </button>
         <BookSlot
           showBookSlot={showBookSlot}
@@ -147,7 +149,7 @@ function MyBooking() {
       {loading ? (
         <div className="bg-white rounded-3xl p-10 border border-slate-200 flex flex-col items-center justify-center gap-3">
           <div className="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs text-slate-500 font-medium">Loading your bookings...</p>
+          <p className="text-xs text-slate-500 font-medium">{t("myBooking.loadingBookings")}</p>
         </div>
       ) : bookings.length === 0 ? (
         <div className="bg-white rounded-3xl p-10 border border-slate-200 text-center space-y-4">
@@ -155,7 +157,7 @@ function MyBooking() {
             <Calendar className="w-8 h-8" />
           </div>
           <h3 className="text-lg font-bold text-slate-900">
-            No Queue Tokens Found
+            {t("myBooking.noTokensTitle")}
           </h3>
           <p className="text-xs text-slate-500 max-w-sm mx-auto">
             You haven't booked any mandi procurement tokens yet. Select your
@@ -166,7 +168,7 @@ function MyBooking() {
             className="px-5 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-semibold shadow-md shadow-green-600/20 transition-all inline-flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Book Your First Token</span>
+            <span>{t("myBooking.bookFirstToken")}</span>
           </button>
           <BookSlot
             showBookSlot={showBookSlot}
@@ -184,7 +186,7 @@ function MyBooking() {
               <div className="flex items-start justify-between gap-2 border-b border-slate-100 pb-3">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Token Number
+                    {t("myBooking.tokenNumber")}
                   </span>
                   <h4 className="text-xl font-extrabold text-emerald-600">
                     #TK-{booking.token || booking.id}
@@ -192,7 +194,7 @@ function MyBooking() {
                   {/* Booking ID with copy */}
                   <CopyBookingId id={booking.id} />
                 </div>
-                <div className="flex flex-row items-center gap-1.5">
+                <div className="flex flex-wrap items-center justify-end gap-1.5">
                   {getStatusBadge(booking.status)}
                   {booking.status === "rejected" && (
                     <button
@@ -214,7 +216,7 @@ function MyBooking() {
                   className="px-3 py-1.5 rounded-lg bg-green-50 hover:bg-green-100 text-green-700 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <Navigation className="w-3.5 h-3.5" />
-                  <span>Live Status</span>
+                  <span>{t("myBooking.liveStatus")}</span>
                 </button>
 
                 {booking.status !== "rejected" &&

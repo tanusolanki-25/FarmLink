@@ -1,3 +1,4 @@
+import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect, useCallback } from "react";
 import {
   RefreshCw, Clock, CheckCircle2,
@@ -11,6 +12,7 @@ import BookingCard from "./BookingCard";
 
 /* ─── Main TodayQueue Component ──────────────────────────────── */
 function TodayQueue() {
+  const { t } = useLanguage();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [callingNext, setCallingNext] = useState(false);
@@ -69,7 +71,7 @@ function TodayQueue() {
     return (
       <div className="flex flex-col items-center justify-center py-18 gap-3">
         <div className="w-6 h-6 border-4 border-green-600 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Loading today's queue...</p>
+        <p className="text-sm text-slate-500 font-medium">{t("todayQueue.loadingQueue")}</p>
       </div>
     );
   }
@@ -80,11 +82,11 @@ function TodayQueue() {
       {/* Call Next + Current Token */}
       <div className="bg-gradient-to-r from-emerald-700 to-green-700 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-indigo-600/20">
         <div className="text-white">
-          <p className="text-xs font-semibold text-white uppercase tracking-wider">Currently Serving</p>
+          <p className="text-xs font-semibold text-white uppercase tracking-wider">{t("todayQueue.currentlyServing")}</p>
           <h3 className="text-3xl font-extrabold mt-1">
             {currentToken !== null ? `Token #${currentToken}` : "—"}
           </h3>
-          <p className="text-xs text-white mt-0.5">Press "Call Next" to advance the queue</p>
+          <p className="text-xs text-white mt-0.5">{t("todayQueue.pressCallNext")}</p>
         </div>
         <button
           onClick={handleCallNext}
@@ -95,17 +97,17 @@ function TodayQueue() {
             ? <Loader2 className="w-4 h-4 animate-spin" />
             : <Megaphone className="w-4 h-4" />
           }
-          Call Next Token
+          {t("todayQueue.callNextToken")}
         </button>
       </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "Total Today", value: counts.total, icon: Users, color: "green" },
-          { label: "Pending",     value: counts.pending, icon: Clock, color: "amber" },
-          { label: "Verified",    value: counts.verified, icon: ShieldCheck, color: "blue" },
-          { label: "Completed",   value: counts.completed, icon: CheckCircle2, color: "emerald" },
+          { label: t("todayQueue.totalToday"), value: counts.total, icon: Users, color: "green" },
+          { label: t("todayQueue.pending"),     value: counts.pending, icon: Clock, color: "amber" },
+          { label: t("todayQueue.verified"),    value: counts.verified, icon: ShieldCheck, color: "blue" },
+          { label: t("todayQueue.completed"),   value: counts.completed, icon: CheckCircle2, color: "emerald" },
         ].map((s) => {
           const Icon = s.icon;
           const colors = {
@@ -158,9 +160,9 @@ function TodayQueue() {
           <div className="w-16 h-16 rounded-full bg-indigo-50 text-green-400 flex items-center justify-center mx-auto">
             <ClipboardList className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-bold text-slate-800">No bookings found</h3>
+          <h3 className="text-lg font-bold text-slate-800">{t("todayQueue.noBookingsTitle")}</h3>
           <p className="text-xs text-slate-500">
-            {filter === "all" ? "No bookings scheduled for today." : `No ${filter} bookings today.`}
+            {filter === "all" ? t("todayQueue.noBookingsAll") : t("todayQueue.noBookingsFilter")}
           </p>
         </div>
       ) : (
