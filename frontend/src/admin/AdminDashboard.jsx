@@ -47,7 +47,7 @@ const AdminDashboard = () => {
 
   if (statsLoading) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-50">
+      <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-50">
         <div className="flex flex-col items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center animate-pulse">
             <UserCog className="w-7 h-7" />
@@ -59,8 +59,8 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-5 px-3 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-4">
+    <div className="h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-3 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto space-y-2">
 
         {/* ── Hero Banner ─────────────────────────────────────── */}
         <div className="bg-gradient-to-r from-emerald-800 via-green-700 to-emerald-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-rose-950/20 relative overflow-hidden">

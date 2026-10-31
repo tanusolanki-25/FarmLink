@@ -72,7 +72,7 @@ const FarmerDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-50">
+      <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-50">
         <div className="flex flex-col items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center animate-pulse">
             <Sprout className="w-7 h-7" />
@@ -86,8 +86,8 @@ const FarmerDashboard = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-5 px-3 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-4">
+    <div className="h-[calc(100vh-4rem)] bg-slate-50/80 py-3 sm:py-3 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-9xl mx-auto space-y-4">
         {/* 1. INCOMPLETE PROFILE BANNER ALERT */}
         {!isProfileComplete && (
           <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
