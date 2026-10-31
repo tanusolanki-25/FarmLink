@@ -27,12 +27,12 @@ export default function FAQ() {
               open={index === 0}
             >
               <summary className="flex cursor-pointer items-center justify-between text-base sm:text-lg font-medium text-gray-900 list-none">
-                <span className="pr-4">{faq.q[lang]}</span>
+                <span className="pr-4">{faq?.question[lang]}</span>
                 <ChevronDown className="h-5 w-5 shrink-0 text-gray-500 transition-transform duration-300 group-open:rotate-180" />
               </summary>
 
               <p className="mt-3 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-slate-100 pt-3">
-                {faq.a[lang]}
+                {faq?.answer[lang]}
               </p>
             </details>
           ))}
